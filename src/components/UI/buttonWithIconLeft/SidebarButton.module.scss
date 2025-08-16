@@ -1,0 +1,30 @@
+.sidebar-button{
+    display: flex;
+    align-items: center;
+    text-align: left;
+    height: 40px;
+    width: 208px;
+    background-color: #000;
+    border: none;
+}
+
+.sidebar-button:hover {
+    background-color: #1f1f1f;
+}
+
+.sidebar-button{
+    color: #fff;
+}
+
+.sidebar-button-icon{
+    width: 21px;
+    height: 23.47px;
+    margin-left: 10px;
+}
+
+.sidebar-button-content{
+    margin-left: 20px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
