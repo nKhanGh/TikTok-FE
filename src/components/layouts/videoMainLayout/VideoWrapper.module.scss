@@ -1,0 +1,15 @@
+.wrapper {
+  height: 100vh;
+  width: 1232px;
+  padding: 16px 176px 16px 64px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  position: absolute;
+  left: 240px;
+  transition: width 0.4s ease;
+}
+
+.video-container {
+  display: flex;
+}

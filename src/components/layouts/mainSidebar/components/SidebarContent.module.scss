@@ -1,62 +1,68 @@
-.sidebar-content{
-    padding: 0px 8px 8px;
+.sidebar-content {
+  padding: 0px 8px 8px;
 }
 
-.sidebar-content-element{
-    margin-bottom: 4px;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    text-align: left;
-    height: 37px;
-    background-color: #000;
-    border: none;
-    text-decoration: none;
-    border-radius: 8px;
-    width: 204px;
+.sidebar-content-element {
+  margin-bottom: 4px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  height: 40px;
+  background-color: #000;
+  border: none;
+  text-decoration: none;
+  border-radius: 8px;
+  width: 208px;
+  padding-left: 4px;
 }
-.sidebar-content-element.sidebar-nav-active{
-    color: rgb(255, 59, 92);
+.sidebar-content-element.sidebar-nav-active {
+  color: rgb(255, 59, 92);
 }
 
 .sidebar-content-element:hover {
-    background-color: #1f1f1f;
+  background-color: #1f1f1f;
 }
 
-
-.sidebar-content-icon{
-    width: 21px;
-    height: 23.47px;
-    margin-left: 10px;
+.sidebar-content-icon {
+  width: 21px;
+  height: 23.47px;
+  margin-left: 10px;
 }
 
-.sidebar-nav-content{
-    margin-left: 20px;
-    font-size: 15px;
-    font-weight: 520;
+.sidebar-nav-content {
+  margin-left: 20px;
+  font-size: 16px;
+  font-weight: 540;
 }
 
-.sidebar-follower{
-    padding: 8px;
+.sidebar-follower {
+  padding: 8px;
 }
 
-.sidebar-follower-content{
-    font-size: 14px;
-    color: #ffffffbf;
-    margin: 10px 0px;
+.sidebar-follower-content {
+  font-size: 14px;
+  color: #ffffffbf;
+  margin: 10px 0px;
 }
 
-.following-content{
-    margin-top: 4px;
-    font-size: 14px;
-    margin-left: 16px;
-    color: #ffffffe6
+.following-content {
+  margin-top: 4px;
+  font-size: 14px;
+  margin-left: 16px;
+  color: #ffffffe6;
 }
 
-.following-name{
-    font-weight: 300;
+.following-name {
+  font-weight: 300;
 }
 
-.following-username{
-    font-weight: 100;
+.following-username {
+  font-weight: 100;
+}
+
+.following-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
 }

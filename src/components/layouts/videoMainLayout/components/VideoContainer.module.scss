@@ -1,0 +1,81 @@
+.video-container {
+  display: inline-block;
+  position: relative;
+  max-height: 100%;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.video {
+  max-width: 70%;
+  max-width: 650px;
+  max-height: calc(100vh - 32px);
+  display: block;
+  object-fit: coer;
+  border-radius: 12px;
+}
+
+.progress-dot {
+  position: absolute;
+  background-color: #fff;
+  width: 11px;
+  height: 11px;
+  bottom: -1.5px;
+  border-radius: 50%;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.progress-container {
+  position: absolute;
+  height: 4px;
+  width: calc(100% - 8px);
+  left: 4px;
+  bottom: 0px;
+  transition: height 150ms ease-in-out;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+
+.progress-bar {
+  position: absolute;
+  height: 4px;
+  width: 100%;
+  left: 0px;
+  bottom: 0px;
+  border-bottom-right-radius: 2.5% 100%;
+  border-bottom-left-radius: 2.5% 100%;
+  overflow: hidden;
+}
+
+.progress-container:hover .progress-dot {
+  opacity: 1;
+}
+
+.progress-container:hover,
+.progress-container:hover .progress-bar {
+  height: 6px;
+  width: calc(100% - 2px);
+  left: 1px;
+  border-bottom-right-radius: 3% 100%;
+  border-bottom-left-radius: 3% 100%;
+}
+
+.progress {
+  position: absolute;
+  bottom: 0;
+  height: 100%;
+}
+
+.progress-static {
+  background-color: #ffffff66;
+  border-bottom-right-radius: 100px;
+  width: 100%;
+}
+
+.progress-run {
+  background-color: #fe2c55;
+  z-index: 1;
+}

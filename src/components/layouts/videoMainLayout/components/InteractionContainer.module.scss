@@ -1,0 +1,67 @@
+.interaction-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  padding: 0px 16px;
+  margin-top: auto;
+}
+
+.interaction-button {
+  width: 48px;
+  height: 48px;
+  line-height: 51px;
+  border-radius: 50%;
+  background-color: #ffffff1f;
+  margin: 8px 0px 6px;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.interaction-button:hover {
+  background-color: #141414;
+}
+
+.interaction-avatar-button {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 14px;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.interaction-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.interaction-num {
+  color: #ffffffbf;
+  text-align: center;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+}
+
+.interaction-avatar-check {
+  width: 20px;
+  height: 20px;
+  border: none;
+  color: #fe2c55;
+  font-size: 11px;
+  z-index: 1;
+  position: relative;
+  bottom: 18px;
+  background-color: #252525;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 20px;
+  left: 15px;
+  font-weight: 900;
+  cursor: pointer;
+}

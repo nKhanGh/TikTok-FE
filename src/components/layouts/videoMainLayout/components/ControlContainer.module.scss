@@ -1,0 +1,27 @@
+.control-container {
+  margin-left: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  right: -48px;
+  transition: right 0.4s ease;
+}
+
+.video-control {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  font-size: 17px;
+  color: #fff;
+  background-color: #ffffff21;
+  margin: 8px 0px;
+  cursor: pointer;
+  font-weight: 2000;
+}
+
+.video-control:hover {
+  background-color: #ffffff40;
+}

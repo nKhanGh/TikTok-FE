@@ -1,0 +1,39 @@
+.heartIcon-container {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  background-color: transparent;
+  font-size: 100px;
+  color: #fe2c66;
+  z-index: 2;
+  border: none;
+  cursor: pointer;
+}
+
+@keyframes heart-pop {
+  0% {
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+  30% {
+    transform: translate(-50%, -50%) scale(0.85);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.heart-container-enter {
+  animation: heart-pop 0.5s ease forwards;
+}
+
+.heart-container-exit {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.heart-container-exit-active {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(1.8);
+  transition: all 600ms ease;
+}

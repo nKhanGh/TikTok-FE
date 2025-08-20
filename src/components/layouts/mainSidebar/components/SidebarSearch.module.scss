@@ -1,8 +1,33 @@
-.sidebar-search{
-    min-height: 100vh;
-    background-color: #000;
-    width: 289.4px;
-    border-left: 0.2px solid #ffffff22;
-    border-right: 0.2px solid #ffffff22;
-    color: #ffffffe6;
+.sidebar-search {
+  min-height: 100vh;
+  background-color: #000;
+  width: 289.4px;
+  border-left: 0.2px solid #ffffff22;
+  border-right: 0.2px solid #ffffff22;
+  color: #ffffffe6;
+  position: absolute;
+  left: 66px;
+  z-index: -100;
+}
+
+.sidebar-search-enter {
+  transform: translateX(-30%);
+  opacity: 0;
+}
+
+.sidebar-search-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+.sidebar-search-exit {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.sidebar-search-exit-active {
+  transform: translateX(-30%);
+  opacity: 0;
+  transition: all 0.3s ease;
 }

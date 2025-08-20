@@ -1,23 +1,26 @@
 @import 'normalize.css';
 
 :root {
-    --primary: #fe2c55;
+  --primary: #fe2c55;
 }
 
 html {
-    font-size: 62.5%;
+  font-size: 62.5%;
 }
 
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+html::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    font-family: 'TikTokFont', 'Arial', 'Tahoma', 'PingFangSC', sans-serif;
-    font-size: 1.6rem;
-    line-height: 1.5;
-    background-color: #000;
+  font-family: 'TikTokFont', 'Arial', 'Tahoma', 'PingFangSC', sans-serif;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  background-color: #000;
 }
-

@@ -1,15 +1,20 @@
-import MainSideBar from "../../components/layouts/mainSidebar/MainSidebar";
-import VideoContainer from "../../components/layouts/videoContainer/VideoContainer";
+import MainSideBar from '../../components/layouts/mainSidebar/MainSidebar';
+import ViewMainLayout from '../../components/layouts/viewMainLayout/viewMainLayout';
+import { FindingProvider } from '../../hooks/FindingContext';
 import styles from './ForYou.module.scss';
-import classNames from "classnames/bind";
+import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styles);
 
 const ForYou = () => {
-    return <div className={cx('wrapper')}>
+  return (
+    <div className={cx('wrapper')}>
+      <FindingProvider>
         <MainSideBar />
-        <VideoContainer />
+      </FindingProvider>
+      <ViewMainLayout />
     </div>
+  );
 };
 
 export default ForYou;
