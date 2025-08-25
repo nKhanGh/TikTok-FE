@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './VideoContainer.module.scss';
-import demo1 from '../demo13.mp4';
+import demo1 from '../demo8.mp4';
 
 import React, { useEffect, useRef, useState } from 'react';
 import { useLiked } from '../../../../hooks/LikedContext';
@@ -8,6 +8,7 @@ import HeartContainer from './videoContainerComponent/HeartContainer';
 import VolumeContainer from './videoContainerComponent/VolumeContainer';
 import PauseContainer from './videoContainerComponent/PauseContainer';
 import SettingWrapper from './videoContainerComponent/SettingWrapper';
+import { useComment } from '../../../../hooks/CommentContext';
 
 const cx = classNames.bind(styles);
 
@@ -183,6 +184,7 @@ const VideoContainer = () => {
         className={cx('video')}
         onClick={handleCheckVideoClick}
         loop
+        style={useComment().showComment ? { maxWidth: '758px' } : {}}
       >
         <source src={demo1} type='video/mp4' />
         <track

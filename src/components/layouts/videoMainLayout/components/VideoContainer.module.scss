@@ -7,12 +7,12 @@
 }
 
 .video {
-  max-width: 70%;
-  max-width: 650px;
+  max-width: 930px;
   max-height: calc(100vh - 32px);
   display: block;
   object-fit: coer;
   border-radius: 12px;
+  transition: all ease 0.4s;
 }
 
 .progress-dot {

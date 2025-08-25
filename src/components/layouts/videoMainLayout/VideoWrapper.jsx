@@ -17,7 +17,7 @@ const VideoWrapper = () => {
     <LikedProvider>
       <div
         className={cx('wrapper')}
-        style={showComment ? { width: '836px' } : {}}
+        style={showComment ? { width: '836px', padding: '0px ' } : {}}
       >
         <div className={cx('video-container')}>
           <VideoContainer />

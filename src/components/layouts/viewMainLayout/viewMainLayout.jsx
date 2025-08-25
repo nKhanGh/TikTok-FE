@@ -9,14 +9,12 @@ const cx = classNames.bind(styles);
 
 const ViewMainLayout = () => {
   return (
-    <LoginProVider>
-      <CommentProvider>
-        <div className={cx('wrapper')}>
-          <VideoWrapper />
-          <CommentContainer />
-        </div>
-      </CommentProvider>
-    </LoginProVider>
+    <CommentProvider>
+      <div className={cx('wrapper')}>
+        <VideoWrapper />
+        <CommentContainer />
+      </div>
+    </CommentProvider>
   );
 };
 
