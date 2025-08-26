@@ -1,7 +1,5 @@
-.input-container {
-  display: flex;
-  flex-direction: column;
-  position: relative;
+.wrapper {
+  width: 363px;
 }
 
 .input-header {
@@ -33,28 +31,33 @@
   color: #747474;
 }
 
-.input-icon {
-  position: absolute;
-  right: 14px;
-  bottom: 38px;
-  color: #747474;
-  cursor: pointer;
-  border: none;
-  background-color: transparent;
-}
-
 .input-footer {
   background-color: transparent;
   border: none;
-  color: #ffffffbf;
+  color: #ffffff50;
   margin-right: auto;
   font-size: 12px;
-  margin-top: 8px;
+  margin-top: 4px;
   font-weight: 600;
   cursor: pointer;
+  line-height: 12px;
 }
 
-.input-footer:hover {
+.skip-button {
+  width: 363px;
+  height: 42px;
   color: #fff;
-  text-decoration: underline;
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.input-warning {
+  color: red;
+  font-size: 12px;
+  line-height: 12px;
+  margin: 4px;
+  font-weight: 600;
 }

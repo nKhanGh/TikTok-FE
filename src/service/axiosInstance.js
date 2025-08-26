@@ -1,14 +1,14 @@
 import axios from 'axios';
 
-const axiosInstance = () => {
-  axios.create({
-    baseURL: '/api',
-  });
-};
+const axiosInstance = axios.create({
+  baseURL: '/api',
+});
 axiosInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem('tiktokToken');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  if (!config.skipAuth) {
+    const token = localStorage.getItem('tiktokToken');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
   }
   return config;
 });
@@ -32,6 +32,7 @@ axiosInstance.interceptors.response.use(
         return Promise.reject(refreshError);
       }
     }
+    return Promise.reject(error);
   },
 );
 

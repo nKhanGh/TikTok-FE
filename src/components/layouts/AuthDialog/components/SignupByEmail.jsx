@@ -2,227 +2,246 @@ import classNames from 'classnames/bind';
 import styles from './SignupByEmail.module.scss';
 import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCaretDown,
-  faChevronDown,
-  faChevronUp,
-} from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import axiosInstance from '../../../../service/axiosInstance';
+import { cTypes } from './DialogComponentType';
+import PropTypes from 'prop-types';
+import BirthdayContainer from './SignupByEmail/BirthdayContainer';
 
 const cx = classNames.bind(styles);
 
-const typeSelections = {
-  null: 'null',
-  day: 'day',
-  month: 'month',
-  year: 'year',
-};
-
-const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
-
-const SignupByEmail = () => {
+const SignupByEmail = ({ setCType, toEmail, setToEmail }) => {
   const [year, setYear] = useState('');
   const [month, setMonth] = useState('');
   const [day, setDay] = useState('');
   const [checked, setChecked] = useState(false);
-  const [typeSelected, setTypeSelected] = useState(typeSelections.null);
-  const dateRef = useRef();
+  const [validEmail, setValidEmail] = useState(true);
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordDesc, setShowPasswordDesc] = useState(false);
+  const [validPasswordLength, setValidPasswordLength] = useState(null);
+  const [validPasswordChar, setValidPasswordChar] = useState(null);
+  const [validPassword, setValidPassword] = useState(true);
+  const [verifyCode, setVerifyCode] = useState('');
+  const [validCode, setValidCode] = useState(true);
+  const [sendCode, setSendCode] = useState(false);
+
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const isMounted = useRef(false);
+  const isValidEmail = (email) =>
+    /\S+@\S+\.\S+/.test(email) || email.length === 0;
+  const isValidPasswordLength = (password) =>
+    password.length >= 8 && password.length <= 20;
+  const isValidPasswordChar = (password) =>
+    /[a-zA-Z]/.test(password) &&
+    /[0-9]/.test(password) &&
+    /[!@#$%^&*(),.?":{}|<>]/.test(password);
+  const isValidPassword = (password) =>
+    isValidPasswordChar(password) && isValidPasswordLength(password);
+  const isValidDob = (year, month, day) => !!year && !!month && !!day;
+  const isValidCode = (verifyCode) => /^\d{6}$/.test(verifyCode);
 
   useEffect(() => {
-    const handleClickOutSide = (e) => {
-      if (dateRef.current && !dateRef.current.contains(e.target))
-        setTypeSelected(typeSelected.null);
-    };
+    if (!isMounted.current) return;
+    const timeout = setTimeout(() => {
+      setValidEmail(isValidEmail(toEmail));
+    }, 700);
 
-    document.addEventListener('mousedown', handleClickOutSide);
-    return () => document.removeEventListener('mousedown', handleClickOutSide);
+    return () => clearTimeout(timeout);
+  }, [toEmail]);
+
+  useEffect(() => {
+    isMounted.current = true;
   }, []);
 
-  const getDaysInMonth = (year, month) => {
-    if (!year || !month) return 31;
-    return new Date(year, month, 0).getDate();
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    setSendCode(true);
+    setLoading(true);
+    setError('');
+    const dob = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    try {
+      const response = await axiosInstance.post(
+        '/auth/register',
+        {
+          toEmail,
+          password,
+          dob,
+        },
+        { skipAuth: true },
+      );
+      setLoading(false);
+      setError('');
+      console.log(response.data.result);
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
   };
+
+  const handleVerifyEmail = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    try {
+      const response = await axiosInstance.post(
+        '/auth/verify-email',
+        {
+          email: toEmail,
+          verifyCode,
+        },
+        { skipAuth: true },
+      );
+      setLoading(false);
+      setError('');
+      console.log(response.data.result);
+      const token = response.data.result.token;
+      localStorage.setItem('tiktokToken', token);
+      setCType(cTypes.username);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
   return (
-    <form onSubmit={() => {}} className={cx('wrapper')}>
-      <div className={cx('birthday-container')}>
-        <div className={cx('birthday-header')}>When's your birthday?</div>
-        <div className={cx('date-container')} ref={dateRef}>
-          <div style={{ position: 'relative' }}>
-            <button
-              type='button'
-              className={cx('date-select')}
-              onClick={() =>
-                setTypeSelected(
-                  typeSelections.year === typeSelected
-                    ? typeSelections.null
-                    : typeSelections.year,
-                )
-              }
-            >
-              {year || 'year'}
-            </button>
-            {typeSelected === typeSelections.year && (
-              <div className={cx('date-option-container')}>
-                {Array.from(
-                  { length: new Date().getFullYear() - 1990 },
-                  (_, i) => i + 1991,
-                )
-                  .reverse()
-                  .map((y) => (
-                    <button
-                      className={cx('date-option-element')}
-                      onClick={() => {
-                        setYear(y);
-                        setTypeSelected(typeSelections.null);
-                      }}
-                    >
-                      {y}
-                    </button>
-                  ))}
-              </div>
-            )}
-            <FontAwesomeIcon
-              className={cx('date-select-icon')}
-              icon={faCaretDown}
-              style={
-                typeSelected === typeSelections.year
-                  ? { transform: 'rotate(180deg)' }
-                  : {}
-              }
-            />
-          </div>
-          <div style={{ position: 'relative' }}>
-            <button
-              type='button'
-              className={cx('date-select')}
-              onClick={() =>
-                setTypeSelected(
-                  typeSelections.month === typeSelected
-                    ? typeSelections.null
-                    : typeSelections.month,
-                )
-              }
-            >
-              {month ? months[month - 1] : 'month'}
-            </button>
-            {typeSelected === typeSelections.month && (
-              <div className={cx('date-option-container')}>
-                {months.map((m, i) => (
-                  <button
-                    type='button'
-                    className={cx('date-option-element')}
-                    onClick={() => {
-                      setMonth(i + 1);
-                      setTypeSelected(typeSelections.null);
-                    }}
-                  >
-                    {m}
-                  </button>
-                ))}
-              </div>
-            )}
-            <FontAwesomeIcon
-              className={cx('date-select-icon')}
-              icon={faCaretDown}
-              style={
-                typeSelected === typeSelections.month
-                  ? { transform: 'rotate(180deg)' }
-                  : {}
-              }
-            />
-          </div>
-          <div style={{ position: 'relative' }}>
-            <button
-              type='button'
-              className={cx('date-select')}
-              onClick={() =>
-                setTypeSelected(
-                  typeSelections.day === typeSelected
-                    ? typeSelections.null
-                    : typeSelections.day,
-                )
-              }
-            >
-              {day || 'Day'}
-            </button>
-            {typeSelected === typeSelections.day && (
-              <div className={cx('date-option-container')}>
-                {Array.from(
-                  { length: getDaysInMonth(year, month) },
-                  (_, i) => i + 1,
-                ).map((d) => (
-                  <button
-                    className={cx('date-option-element')}
-                    onClick={() => {
-                      setDay(d);
-                      setTypeSelected(typeSelections.null);
-                    }}
-                  >
-                    {d}
-                  </button>
-                ))}
-              </div>
-            )}
-            <FontAwesomeIcon
-              className={cx('date-select-icon')}
-              icon={faCaretDown}
-              style={
-                typeSelected === typeSelections.day
-                  ? { transform: 'rotate(180deg)' }
-                  : {}
-              }
-            />
-          </div>
-        </div>
-        <div className={cx('birthday-footer')}>
-          Your birthday won't be shown publicly.
-        </div>
-      </div>
+    <form onSubmit={handleVerifyEmail} className={cx('wrapper')}>
+      <BirthdayContainer
+        year={year}
+        month={month}
+        day={day}
+        setYear={setYear}
+        setMonth={setMonth}
+        setDay={setDay}
+      />
       <div className={cx('email-container')}>
         <div className={cx('email-header')}>Email</div>
         <input
           type='text'
           className={cx('input-element')}
+          style={!validEmail ? { border: 'solid 1px red', color: 'red' } : {}}
           placeholder='Email address'
+          value={toEmail}
+          onChange={(e) => {
+            setToEmail(e.target.value);
+            setValidEmail(true);
+          }}
+          onFocus={() => setValidEmail(true)}
+          onBlur={() => setValidEmail(isValidEmail(toEmail))}
         />
-        <input
-          type='password'
-          className={cx('input-element')}
-          placeholder='Password'
-        />
-        <div className={cx('password-description')}>
-          <div className={cx('password-description-headed')}>
-            Your password must have:
-          </div>
-          <div className={cx('password-description-content')}>
-            8 to 20 characters
-          </div>
-          <div className={cx('password-description-content')}>
-            Letters, numbers, and special characters
-          </div>
+        {!validEmail && (
+          <div className={cx('input-warning')}>Enter a valid email address</div>
+        )}
+        <div style={{ position: 'relative' }}>
+          <input
+            type={showPassword ? 'text' : 'password'}
+            style={
+              !validPassword ? { border: 'solid 1px red', color: 'red' } : {}
+            }
+            className={cx('input-element')}
+            placeholder='Password'
+            value={password}
+            onChange={(e) => {
+              const newPassword = e.target.value;
+              setPassword(newPassword);
+              setValidPasswordChar(
+                isValidPasswordChar(newPassword) ? true : null,
+              );
+              setValidPasswordLength(
+                isValidPasswordLength(newPassword) ? true : null,
+              );
+            }}
+            onFocus={() => {
+              setShowPasswordDesc(true);
+              setValidPasswordLength(
+                password.length === 0 ? null : isValidPasswordLength(password),
+              );
+              setValidPasswordChar(
+                password.length === 0 ? null : isValidPasswordChar(password),
+              );
+              setValidPassword(true);
+            }}
+            onBlur={() => {
+              setValidPassword(
+                isValidPassword(password) || password.length === 0,
+              );
+              setShowPasswordDesc(password.length !== 0);
+              setValidPasswordLength(isValidPasswordLength(password));
+              setValidPasswordChar(isValidPasswordChar(password));
+            }}
+          />
+          <button
+            type='button'
+            className={cx('input-icon')}
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
+          </button>
         </div>
+        {showPasswordDesc && (
+          <div className={cx('password-description')}>
+            <div className={cx('password-description-headed')}>
+              Your password must have:
+            </div>
+            <div
+              className={cx('password-description-content')}
+              style={
+                validPasswordLength !== null
+                  ? validPasswordLength
+                    ? { color: '#0be09b' }
+                    : { color: 'red' }
+                  : {}
+              }
+            >
+              8 to 20 characters
+            </div>
+            <div
+              className={cx('password-description-content')}
+              style={
+                validPasswordChar !== null
+                  ? validPasswordChar
+                    ? { color: '#0be09b' }
+                    : { color: 'red' }
+                  : {}
+              }
+            >
+              Letters, numbers, and special characters
+            </div>
+          </div>
+        )}
         <div className={cx('email-code')}>
           <input
             type='text'
             placeholder='Enter 6-digit code'
             className={cx('email-code-input')}
+            style={!validCode ? { border: 'solid 1px red', color: 'red' } : {}}
+            value={verifyCode}
+            onChange={(e) => {
+              setVerifyCode(e.target.value);
+            }}
+            onBlur={() =>
+              setValidCode(verifyCode.length === 0 || isValidCode(verifyCode))
+            }
+            onFocus={() => setValidCode(true)}
           />
-          <button type='button' className={cx('email-code-button')}>
+          <button
+            disabled={
+              !(
+                isValidEmail(toEmail) &&
+                isValidPassword(password) &&
+                isValidDob(year, month, day)
+              )
+            }
+            type='button'
+            className={cx('email-code-button')}
+            onClick={handleRegister}
+          >
             Send code
           </button>
         </div>
+        {!validCode && (
+          <div className={cx('input-warning')}>Enter 6-digit code</div>
+        )}
         <div className={cx('signup-check')}>
           <input
             id='checkbox-signup'
@@ -240,11 +259,21 @@ const SignupByEmail = () => {
           </label>
         </div>
       </div>
-      <button className={cx('signup-submit')} type='submit'>
+      <button
+        disabled={!(sendCode && isValidCode(verifyCode) && checked)}
+        className={cx('signup-submit')}
+        type='submit'
+      >
         Next
       </button>
     </form>
   );
+};
+
+SignupByEmail.propTypes = {
+  setCType: PropTypes.func.isRequired,
+  toEmail: PropTypes.string.isRequired,
+  setToEmail: PropTypes.func.isRequired,
 };
 
 export default SignupByEmail;

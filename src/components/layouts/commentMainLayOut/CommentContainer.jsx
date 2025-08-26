@@ -8,7 +8,7 @@ import {
   faFaceSmile,
   faHeart,
 } from '@fortawesome/free-solid-svg-icons';
-import avatar from './avatar.png';
+import avatar from './avatar.jpg';
 import { useRef, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 

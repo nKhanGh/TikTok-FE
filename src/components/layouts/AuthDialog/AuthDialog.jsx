@@ -1,25 +1,21 @@
 import classNames from 'classnames/bind';
 import styles from './AuthDialog.module.scss';
-import {
-  faBackspace,
-  faClose,
-  faEye,
-  faQrcode,
-  faUser,
-} from '@fortawesome/free-solid-svg-icons';
+import { faClose, faQrcode, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLogin } from '../../../hooks/LoginContext';
 import { useState } from 'react';
 import LoginByEmail from './components/LoginByEmail';
 import SignupByEmail from './components/SignupByEmail';
+import { cTypes } from './components/DialogComponentType';
+import SetUsername from './components/SetUsername';
 
 const cx = classNames.bind(styles);
 
 const AuthDialog = () => {
   const { setShowLogin } = useLogin();
-  const [isEmail, setIsEmail] = useState(false);
-  const [isSignup, setIsSignup] = useState(false);
+  const [cType, setCType] = useState(cTypes.login);
+  const [toEmail, setToEmail] = useState('');
 
   const loginButtonList = [
     {
@@ -32,7 +28,7 @@ const AuthDialog = () => {
       name: 'email or username',
       content: 'Use Email / username',
       icon: faUser,
-      func: () => setIsEmail(true),
+      func: () => setCType(cTypes.loginEmail),
     },
     {
       name: 'facebook',
@@ -53,7 +49,7 @@ const AuthDialog = () => {
       name: 'email',
       content: 'Use Email',
       icon: faUser,
-      func: () => setIsEmail(true),
+      func: () => setCType(cTypes.signupEmail),
     },
     {
       name: 'facebook',
@@ -71,10 +67,13 @@ const AuthDialog = () => {
 
   let textHeader;
 
-  if (isEmail && isSignup) textHeader = 'Sign up';
-  else if (isEmail && !isSignup) textHeader = 'Sign in';
-  else if (!isEmail && isSignup) textHeader = 'Sign up for TikTok';
+  if (cType === cTypes.signupEmail || cType === cTypes.username)
+    textHeader = 'Sign up';
+  else if (cType === cTypes.loginEmail) textHeader = 'Sign in';
+  else if (cType === cTypes.signup) textHeader = 'Sign up for TikTok';
   else textHeader = 'Log in to TikTok';
+
+  console.log(cType);
 
   return (
     <div className={cx('wrapper')}>
@@ -87,8 +86,7 @@ const AuthDialog = () => {
         </button>
         <div className={cx('login-header')}>{textHeader}</div>
         <div className={cx('login-button-container')}>
-          {!isEmail &&
-            !isSignup &&
+          {cType === cTypes.login &&
             loginButtonList.map((login) => (
               <button
                 key={login.name}
@@ -103,8 +101,7 @@ const AuthDialog = () => {
                 </div>
               </button>
             ))}
-          {!isEmail &&
-            isSignup &&
+          {cType === cTypes.signup &&
             logoutButtonList.map((login) => (
               <button
                 key={login.name}
@@ -119,16 +116,28 @@ const AuthDialog = () => {
                 </div>
               </button>
             ))}
-          {isEmail && !isSignup && <LoginByEmail />}
-          {isEmail && isSignup && <SignupByEmail />}
+          {cType === cTypes.loginEmail && <LoginByEmail setCType={setCType} />}
+          {cType === cTypes.signupEmail && (
+            <SignupByEmail
+              setCType={setCType}
+              toEmail={toEmail}
+              setToEmail={setToEmail}
+            />
+          )}
+          {cType === cTypes.username && <SetUsername toEmail={toEmail} />}
         </div>
-        {}
         <div
           className={cx('login-footer')}
-          style={isEmail && !isSignup ? { backgroundColor: 'transparent' } : {}}
+          style={
+            cType === cTypes.loginEmail
+              ? { backgroundColor: 'transparent' }
+              : {}
+          }
         >
           <div className={cx('login-footer-content')}>
-            {!(isEmail && !isSignup) && (
+            {(cType === cTypes.login ||
+              cType === cTypes.signup ||
+              cType === cTypes.signupEmail) && (
               <span>
                 By continuing with an account located in Vietnam, you agree to
                 our Terms of Service and acknowledge that you have read our
@@ -137,7 +146,7 @@ const AuthDialog = () => {
             )}
           </div>
           <div className={cx('login-signup')}>
-            {isSignup ? (
+            {textHeader.includes('up') ? (
               <span>Already have a account</span>
             ) : (
               <span>Don't have an account?</span>
@@ -145,11 +154,12 @@ const AuthDialog = () => {
             <button
               className={cx('signup-swap')}
               onClick={() => {
-                setIsSignup(!isSignup);
-                setIsEmail(false);
+                setCType(
+                  textHeader.includes('up') ? cTypes.login : cTypes.signup,
+                );
               }}
             >
-              Sign up
+              {textHeader.includes('up') ? 'Sign in' : 'Sign up'}
             </button>
           </div>
         </div>

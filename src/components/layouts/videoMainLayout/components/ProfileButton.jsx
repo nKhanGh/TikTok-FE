@@ -3,18 +3,14 @@ import styles from './ProfileButton.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCoins,
-  faMobile,
   faMobileScreen,
-  faPhone,
-  faQrcode,
   faRightFromBracket,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { NavLink, useNavigate } from 'react-router-dom';
-import avatar from './avatar.png';
-import { use, useState } from 'react';
+import avatar from './avatar.jpg';
+import { useState } from 'react';
 import { useLogin } from '../../../../hooks/LoginContext';
-import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import AuthDialog from '../../AuthDialog/AuthDialog';
 
 const cx = classNames.bind(styles);

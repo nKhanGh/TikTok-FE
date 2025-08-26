@@ -3,32 +3,43 @@ import styles from './LoginByEmail.module.scss';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
-import axios from 'axios';
+import { useLogin } from '../../../../hooks/LoginContext';
+import axiosInstance from '../../../../service/axiosInstance';
+import LoginSubmitButton from '../../../UI/LoginSubmitButton';
 
 const cx = classNames.bind(styles);
 
 const LoginByEmail = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [usernameOrEmail, SetUsernameOrEmail] = useState('');
+  const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const { setShowLogin, setIsLogin } = useLogin();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
     try {
-      const response = await axios.post('api/auth/login', {
-        usernameOrEmail,
-        password,
-      });
+      const response = await axiosInstance.post(
+        'auth/login',
+        {
+          usernameOrEmail,
+          password,
+        },
+        { skipAuth: true },
+      );
       setPassword('');
-      SetUsernameOrEmail('');
+      setUsernameOrEmail('');
       const token = response.data.result.token;
       console.log(token);
-      localStorage.setItem('tiktokItem', token);
+      localStorage.setItem('tiktokToken', token);
+      setIsLogin(true);
+      setShowLogin(false);
       alert('login success');
+      setLoading(false);
     } catch (error) {
       console.log(error.response.data.message);
     }
@@ -44,7 +55,7 @@ const LoginByEmail = () => {
             className={cx('input-element')}
             placeholder='Email or username'
             value={usernameOrEmail}
-            onChange={(e) => SetUsernameOrEmail(e.target.value)}
+            onChange={(e) => setUsernameOrEmail(e.target.value)}
           />
           <input
             type={showPassword ? 'text' : 'password'}
@@ -64,17 +75,10 @@ const LoginByEmail = () => {
             Forgot password?
           </button>
         </div>
-        <button
-          type='submit'
-          className={
-            usernameOrEmail.length != 0 && password.length != 0
-              ? cx('input-submit-active')
-              : cx('input-submit')
-          }
-          disabled={usernameOrEmail.length === 0 || password.length === 0}
-        >
-          Log in
-        </button>
+        <LoginSubmitButton
+          disabled={password.length === 0 || usernameOrEmail.length === 0}
+          content={'Login'}
+        />
       </form>
       {/* {loading ? "Logging in..." : "Log in"} */}
     </>

@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './VideoContainer.module.scss';
-import demo1 from '../demo8.mp4';
+import demo1 from '../demo1.mp4';
 
 import React, { useEffect, useRef, useState } from 'react';
 import { useLiked } from '../../../../hooks/LikedContext';
