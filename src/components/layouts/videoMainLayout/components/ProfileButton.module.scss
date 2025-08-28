@@ -79,15 +79,33 @@
 
 .container {
   position: absolute;
-  top: 40px;
-  right: 16px;
+  top: 36px;
+  right: 8px;
   z-index: 1;
   background-color: #3a3a3a;
   border-radius: 12px;
-  border: 1.5px solid #515151;
+  border: 1px solid #ffffff50;
   display: flex;
   flex-direction: column;
   padding: 4px;
+}
+
+.container-enter {
+  opacity: 0;
+}
+
+.container-enter-active {
+  opacity: 1;
+  transition: all 0.2s ease;
+}
+
+.container-exit {
+  opacity: 1;
+}
+
+.container-exit-active {
+  opacity: 0;
+  transition: all 0.2s ease;
 }
 
 .container-button {
@@ -95,9 +113,9 @@
   border: none;
   text-decoration: none;
   background-color: transparent;
-  width: 200px;
+  width: 220px;
   height: 50px;
-  padding: 0px 12px;
+  padding: 0px 14px;
   text-align: left;
   font-size: 16px;
   font-weight: 700;

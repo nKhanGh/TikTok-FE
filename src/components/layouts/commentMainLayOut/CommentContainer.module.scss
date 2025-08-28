@@ -161,7 +161,7 @@
 }
 
 .comment-add {
-  width: 272px;
+  width: 304px;
   height: 45px;
   background-color: #ffffff1f;
   border: none;
@@ -179,7 +179,7 @@
 
 .comment-add::placeholder {
   font-weight: 550;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .comment-icon {
@@ -200,13 +200,13 @@
 }
 
 .comment-tag {
-  right: 104px;
+  right: 109px;
   top: 8px;
   padding: 2px 0 4px;
 }
 
 .comment-emoji {
-  right: 75px;
+  right: 80px;
   top: 8px;
   padding-top: 4px;
 }
@@ -216,7 +216,7 @@
   background-color: transparent;
   border: none;
   margin-left: 26px;
-  margin-top: 12px;
-  font-size: 14px;
+  font-size: 15px;
+  line-height: 30px;
   cursor: pointer;
 }

@@ -9,9 +9,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { NavLink, useNavigate } from 'react-router-dom';
 import avatar from './avatar.jpg';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLogin } from '../../../../hooks/LoginContext';
 import AuthDialog from '../../AuthDialog/AuthDialog';
+import { CSSTransition } from 'react-transition-group';
 
 const cx = classNames.bind(styles);
 
@@ -19,12 +20,36 @@ const ProfileButton = () => {
   const navigate = useNavigate();
   const [showContainer, setShowContainer] = useState(false);
   const [showLogOut, setShowLogOut] = useState(false);
+  const [user, setUser] = useState(null);
+
+  const containerRef = useRef(null);
+  const nodeRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutSide = (e) => {
+      if (containerRef.current && !containerRef.current.contains(e.target))
+        setShowContainer(false);
+    };
+    document.addEventListener('mousedown', handleClickOutSide);
+
+    return () => document.removeEventListener('mousedown', handleClickOutSide);
+  }, []);
+
+  useEffect(() => {
+    const userStr = localStorage.getItem('tiktokUser');
+    if (userStr) {
+      setUser(JSON.parse(userStr));
+    }
+  }, []);
 
   const { isLogin, setIsLogin, showLogin, setShowLogin } = useLogin();
 
   const handleLogout = () => {
+    setUser(null);
     setShowLogOut(false);
     setIsLogin(false);
+    localStorage.removeItem('tiktokUser');
+    localStorage.removeItem('tiktokToken');
     navigate('/');
   };
 
@@ -36,13 +61,21 @@ const ProfileButton = () => {
       <button className={cx('get-button')}>
         <FontAwesomeIcon icon={faMobileScreen} /> Get App
       </button>
-      <div className={cx('line')}>
+      <div className={cx('line')} ref={containerRef}>
         {isLogin ? (
           <button
             className={cx('avatar-button')}
             onClick={() => setShowContainer(!showContainer)}
           >
-            <img src={avatar} alt='Khang' className={cx('avatar-img')} />
+            <img
+              src={
+                user && user.avatarUrl
+                  ? user.avatarUrl
+                  : '/api/images/default_avatar.jpg'
+              }
+              alt='Khang'
+              className={cx('avatar-img')}
+            />
           </button>
         ) : (
           <button
@@ -55,23 +88,34 @@ const ProfileButton = () => {
             Log in
           </button>
         )}
+        <CSSTransition
+          in={showContainer}
+          timeout={200}
+          nodeRef={nodeRef}
+          unmountOnExit
+          classNames={{
+            enter: cx('container-enter'),
+            enterActive: cx('container-enter-active'),
+            exit: cx('container-exit'),
+            exitActive: cx('container-exit-active'),
+          }}
+        >
+          <div className={cx('container')} ref={nodeRef}>
+            <NavLink to={'/profile'} className={cx('container-button')}>
+              <FontAwesomeIcon icon={faUser} /> View Profile
+            </NavLink>
+            <button
+              onClick={() => {
+                setShowLogOut(true);
+                setShowContainer(false);
+              }}
+              className={cx('container-button')}
+            >
+              <FontAwesomeIcon icon={faRightFromBracket} /> Log out
+            </button>
+          </div>
+        </CSSTransition>
       </div>
-      {showContainer && (
-        <div className={cx('container')}>
-          <NavLink to={'/profile'} className={cx('container-button')}>
-            <FontAwesomeIcon icon={faUser} /> View Profile
-          </NavLink>
-          <button
-            onClick={() => {
-              setShowLogOut(true);
-              setShowContainer(false);
-            }}
-            className={cx('container-button')}
-          >
-            <FontAwesomeIcon icon={faRightFromBracket} /> Log out
-          </button>
-        </div>
-      )}
       {showLogOut && (
         <div className={cx('logout-container')}>
           <div className={cx('logout-dialog')}>

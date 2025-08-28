@@ -31,17 +31,27 @@ const LoginByEmail = () => {
         },
         { skipAuth: true },
       );
-      setPassword('');
-      setUsernameOrEmail('');
       const token = response.data.result.token;
-      console.log(token);
       localStorage.setItem('tiktokToken', token);
+
       setIsLogin(true);
       setShowLogin(false);
+      setPassword('');
+      setUsernameOrEmail('');
       alert('login success');
-      setLoading(false);
+
+      const userResponse = await axiosInstance.get('users/myInfo', {
+        skipAuth: false,
+      });
+      localStorage.setItem(
+        'tiktokUser',
+        JSON.stringify(userResponse.data.result),
+      );
     } catch (error) {
-      console.log(error.response.data.message);
+      setError(error.response.data.message);
+      alert(error);
+    } finally {
+      setLoading(false);
     }
   };
 
