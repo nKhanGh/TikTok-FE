@@ -8,7 +8,6 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { NavLink, useNavigate } from 'react-router-dom';
-import avatar from './avatar.jpg';
 import { useEffect, useRef, useState } from 'react';
 import { useLogin } from '../../../../hooks/LoginContext';
 import AuthDialog from '../../AuthDialog/AuthDialog';
@@ -40,6 +39,7 @@ const ProfileButton = () => {
     if (userStr) {
       setUser(JSON.parse(userStr));
     }
+    console.log(userStr);
   }, []);
 
   const { isLogin, setIsLogin, showLogin, setShowLogin } = useLogin();

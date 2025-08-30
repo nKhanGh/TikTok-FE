@@ -1,0 +1,40 @@
+.wrapper {
+  background-color: #fbfafa;
+  height: 68px;
+  width: 100vw;
+  display: flex;
+  position: fixed;
+}
+
+.tiktok-icon-container {
+  width: 247.2px;
+  padding: 0 19px 0 20px;
+  border: 1px solid #00000014;
+}
+
+.img-icon {
+  width: 162px;
+  margin-top: 20px;
+}
+
+.tiktok-avatar-container {
+  padding: 0 32px;
+  display: flex;
+  flex: 1;
+  border-bottom: 1px solid #00000014;
+}
+
+.avatar-button {
+  margin-left: auto;
+  width: 36px;
+  height: 36px;
+  margin-top: 15.6px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+}
+
+.img-avatar {
+  width: 100%;
+  border-radius: 50%;
+}

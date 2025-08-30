@@ -5,7 +5,7 @@ import SidebarHeader from './components/SidebarHeader';
 import SidebarContent from './components/SidebarContent';
 import SidebarFooter from './components/SidebarFooter';
 import SidebarSearch from './components/SidebarSearch';
-import { FindingProvider, useFinding } from '../../../hooks/FindingContext';
+import { useFinding } from '../../../hooks/FindingContext';
 
 const cx = classNames.bind(styles);
 

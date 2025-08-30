@@ -1,0 +1,67 @@
+.preview-progress {
+  padding: 16px;
+  background-color: #fff;
+  border: solid 1px #00000014;
+  border-radius: 8px;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+
+.preview-info {
+  margin-left: 8px;
+}
+
+.preview-name {
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.preview-loading {
+  animation: spin 1s linear infinite;
+  margin-right: 6px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.preview-check {
+  margin-right: 6px;
+}
+
+.preview-size {
+  color: #008568;
+  font-size: 14px;
+  margin-top: 6px;
+  margin-bottom: 12px;
+}
+
+.preview-replace {
+  margin-left: auto;
+  border: none;
+  border-radius: 8px;
+  padding: 1px 12px;
+  font-size: 14px;
+  line-height: 10px;
+  height: 36px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  position: absolute;
+  bottom: 0px;
+  background-color: #0be09b;
+  left: 0;
+}
+
+.preview-container {
+  display: flex;
+}

@@ -1,0 +1,14 @@
+.wrapper {
+  position: fixed;
+  overflow-y: auto;
+  top: 68px;
+  left: 247.2px;
+  height: calc(100vh - 68px);
+  width: calc(100vw - 247.2px);
+  background-color: #fbfafa;
+  padding: 32px;
+}
+
+.wrapper::-webkit-scrollbar {
+  display: none;
+}

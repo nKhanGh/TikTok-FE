@@ -3,6 +3,10 @@ import axios from 'axios';
 const axiosInstance = axios.create({
   baseURL: '/api',
 });
+
+const axiosNoAuth = axios.create({
+  baseURL: '/api',
+});
 axiosInstance.interceptors.request.use((config) => {
   if (!config.skipAuth) {
     const token = localStorage.getItem('tiktokToken');
@@ -22,13 +26,12 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const token = localStorage.getItem('tiktokToken');
-        const res = await axios.post('/api/auth/refreshToken', { token });
+        const res = await axiosNoAuth.post('/auth/refreshToken', { token });
         const newToken = res.data.result.token;
         localStorage.setItem('tiktokToken', newToken);
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return axiosInstance(originalRequest);
       } catch (refreshError) {
-        localStorage.removeItem('tiktokToken');
         return Promise.reject(refreshError);
       }
     }

@@ -1,0 +1,90 @@
+.upload-wrapper {
+  padding: 24px;
+  background-color: #fff;
+  border: solid 1px #00000014;
+  border-radius: 8px;
+}
+
+.upload-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 1174.4px;
+  height: 460px;
+  border: 1px dashed #00000026;
+  border-radius: 8px;
+  background-color: #f8f8f8;
+  transition: background 0.15s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #0075dc0f;
+    border: dashed 1px #0075dc;
+  }
+}
+
+.upload-image {
+  width: 72px;
+  height: 72px;
+}
+
+.upload-select {
+  margin-top: 12px;
+  font-size: 22px;
+  line-height: 30px;
+  font-weight: 700;
+}
+
+.upload-desc {
+  color: #0000007a;
+  font-size: 16px;
+}
+
+.upload-input {
+  display: none;
+}
+
+.upload-label {
+  width: 208px;
+  height: 36px;
+  background-color: #fe2c55;
+  border-radius: 8px;
+  margin-top: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.upload-text {
+  color: #fff;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.upload-footer {
+  display: flex;
+  padding-top: 32px;
+}
+
+.footer-element {
+  width: 296px;
+  display: flex;
+  margin: 0 4px;
+}
+
+.footer-icon {
+  padding-right: 8px;
+  padding-top: 4px;
+}
+
+.footer-header {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.footer-content {
+  font-size: 13px;
+  color: #8585b0;
+}
