@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import styles from './UploadPreviewInfo.module.scss';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import axiosInstance from '../../../../service/axiosInstance';
+import useAxios from '../../../../service/useAxios';
 
 const cx = classNames.bind(styles);
 
@@ -22,6 +22,8 @@ const UploadPreviewInfo = ({ selectedFile, videoFileId, setSelectedFile }) => {
     return filename.substring(0, dotIndex);
   });
   const [timePost, setTimePost] = useState(postTime.now);
+
+  const axiosInstance = useAxios();
 
   const addHashtag = () => {
     setUploadContent((prev) => {
@@ -55,7 +57,7 @@ const UploadPreviewInfo = ({ selectedFile, videoFileId, setSelectedFile }) => {
       alert('Video Published');
       setSelectedFile(null);
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data.message);
     }
   };
 

@@ -1,6 +1,6 @@
 import MainSideBar from '../../components/layouts/mainSidebar/MainSidebar';
 import ViewMainLayout from '../../components/layouts/viewMainLayout/viewMainLayout';
-import { FindingProvider } from '../../hooks/FindingContext';
+import { FindingProvider } from '../../contexts/FindingContext';
 import styles from './ForYou.module.scss';
 import classNames from 'classnames/bind';
 

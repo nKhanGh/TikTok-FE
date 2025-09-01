@@ -7,11 +7,12 @@ import {
   faRightFromBracket,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-import { useLogin } from '../../../../hooks/LoginContext';
-import AuthDialog from '../../AuthDialog/AuthDialog';
+import { useLogin } from '../../../contexts/LoginContext';
+import AuthDialog from '../AuthDialog/AuthDialog';
 import { CSSTransition } from 'react-transition-group';
+import useAvatar from '../../../hooks/useAvatar';
 
 const cx = classNames.bind(styles);
 
@@ -19,7 +20,11 @@ const ProfileButton = () => {
   const navigate = useNavigate();
   const [showContainer, setShowContainer] = useState(false);
   const [showLogOut, setShowLogOut] = useState(false);
-  const [user, setUser] = useState(null);
+  const { avatarUrl, updateAvatar } = useAvatar();
+
+  const location = useLocation();
+
+  const isProfilePage = location.pathname.includes('@');
 
   const containerRef = useRef(null);
   const nodeRef = useRef(null);
@@ -34,21 +39,14 @@ const ProfileButton = () => {
     return () => document.removeEventListener('mousedown', handleClickOutSide);
   }, []);
 
-  useEffect(() => {
-    const userStr = localStorage.getItem('tiktokUser');
-    if (userStr) {
-      setUser(JSON.parse(userStr));
-    }
-    console.log(userStr);
-  }, []);
-
   const { isLogin, setIsLogin, showLogin, setShowLogin } = useLogin();
 
   const handleLogout = () => {
-    setUser(null);
+    updateAvatar(null);
     setShowLogOut(false);
     setIsLogin(false);
-    localStorage.removeItem('tiktokUser');
+    localStorage.removeItem('tiktokAvatarUrl');
+    localStorage.removeItem('tiktokUsername');
     localStorage.removeItem('tiktokToken');
     navigate('/');
   };
@@ -56,10 +54,12 @@ const ProfileButton = () => {
   return (
     <div className={cx('profile-button')}>
       <button className={cx('get-button')}>
-        <FontAwesomeIcon icon={faCoins} /> Get Coins
+        <FontAwesomeIcon icon={faCoins} />{' '}
+        {!isProfilePage && <span>Get Coins</span>}
       </button>
       <button className={cx('get-button')}>
-        <FontAwesomeIcon icon={faMobileScreen} /> Get App
+        <FontAwesomeIcon icon={faMobileScreen} />{' '}
+        {!isProfilePage && <span>Get App</span>}
       </button>
       <div className={cx('line')} ref={containerRef}>
         {isLogin ? (
@@ -68,11 +68,7 @@ const ProfileButton = () => {
             onClick={() => setShowContainer(!showContainer)}
           >
             <img
-              src={
-                user && user.avatarUrl
-                  ? user.avatarUrl
-                  : '/api/images/default_avatar.jpg'
-              }
+              src={avatarUrl ?? '/api/images/default_avatar.jpg'}
               alt='Khang'
               className={cx('avatar-img')}
             />

@@ -1,9 +1,9 @@
 import classNames from 'classnames/bind';
 import styles from './viewMainLayout.module.scss';
-import { CommentProvider } from '../../../hooks/CommentContext';
+import { CommentProvider } from '../../../contexts/CommentContext';
 import CommentContainer from '../commentMainLayOut/CommentContainer';
 import VideoWrapper from '../videoMainLayout/VideoWrapper';
-import { LoginProVider } from '../../../hooks/LoginContext';
+import { LoginProVider } from '../../../contexts/LoginContext';
 
 const cx = classNames.bind(styles);
 

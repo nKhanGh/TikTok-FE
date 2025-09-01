@@ -2,17 +2,16 @@ import classNames from 'classnames/bind';
 import styles from './SetUsername.module.scss';
 import { useEffect, useState } from 'react';
 import LoginSubmitButton from '../../../UI/LoginSubmitButton';
-import axiosInstance from '../../../../service/axiosInstance';
-import PropTypes from 'prop-types';
-import { useLogin } from '../../../../hooks/LoginContext';
+import useAxios from '../../../../service/useAxios';
+import { useLogin } from '../../../../contexts/LoginContext';
 
 const cx = classNames.bind(styles);
-const SetUsername = ({ toEmail }) => {
+const SetUsername = () => {
   const [username, setUsername] = useState('');
   const [validUsername, setValidUsername] = useState(true);
   const [showWarning, setShowWarning] = useState(false);
-
   const { setIsLogin, setShowLogin } = useLogin();
+  const axiosInstance = useAxios();
   const handleUsernameExisted = async () => {
     try {
       const response = await axiosInstance.get(`/users/exist/${username}`, {
@@ -25,37 +24,22 @@ const SetUsername = ({ toEmail }) => {
       console.log(error);
     }
   };
-  console.log(toEmail);
 
   const handleAddUsername = async (e) => {
     e.preventDefault();
     try {
       const response = await axiosInstance.post('/users/set-username', {
-        email: toEmail,
         username,
       });
       console.log(response);
       setIsLogin(true);
       setShowLogin(false);
+      localStorage.setItem('tiktokUsername', username);
     } catch (error) {
       console.log(error);
+      alert(error.response?.data.message);
     }
   };
-
-  const handleAddRandomUsername = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axiosInstance.post('/users/set-ramdom-username', {
-        email: toEmail,
-      });
-      setIsLogin(true);
-      setShowLogin(false);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (username.length !== 0) handleUsernameExisted();
@@ -92,16 +76,15 @@ const SetUsername = ({ toEmail }) => {
       <button
         type='button'
         className={cx('skip-button')}
-        onClick={handleAddRandomUsername}
+        onClick={() => {
+          setIsLogin(true);
+          setShowLogin(false);
+        }}
       >
         Skip
       </button>
     </form>
   );
-};
-
-SetUsername.propTypes = {
-  toEmail: PropTypes.string.isRequired,
 };
 
 export default SetUsername;

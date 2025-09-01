@@ -3,12 +3,12 @@ import styles from './VideoContainer.module.scss';
 import demo1 from '../demo1.mp4';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { useLiked } from '../../../../hooks/LikedContext';
+import { useLiked } from '../../../../contexts/LikedContext';
 import HeartContainer from './videoContainerComponent/HeartContainer';
 import VolumeContainer from './videoContainerComponent/VolumeContainer';
 import PauseContainer from './videoContainerComponent/PauseContainer';
 import SettingWrapper from './videoContainerComponent/SettingWrapper';
-import { useComment } from '../../../../hooks/CommentContext';
+import { useComment } from '../../../../contexts/CommentContext';
 
 const cx = classNames.bind(styles);
 

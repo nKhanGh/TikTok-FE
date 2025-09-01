@@ -3,7 +3,7 @@ import styles from './AuthDialog.module.scss';
 import { faClose, faQrcode, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useLogin } from '../../../hooks/LoginContext';
+import { useLogin } from '../../../contexts/LoginContext';
 import { useState } from 'react';
 import LoginByEmail from './components/LoginByEmail';
 import SignupByEmail from './components/SignupByEmail';

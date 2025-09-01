@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './CommentContainer.module.scss';
-import { useComment } from '../../../hooks/CommentContext';
+import { useComment } from '../../../contexts/CommentContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faClose,

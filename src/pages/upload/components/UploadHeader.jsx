@@ -9,11 +9,7 @@ const cx = classNames.bind(styles);
 const UploadHeader = () => {
   const navigate = useNavigate();
 
-  const [user, setUser] = useState(() => {
-    const userStr = localStorage.getItem('tiktokUser');
-    console.log(userStr);
-    return userStr ? JSON.parse(userStr) : null;
-  });
+  const avatarUrl = localStorage.getItem('tiktokAvatarUrl');
   return (
     <div className={cx('wrapper')}>
       <div className={cx('tiktok-icon-container')}>
@@ -24,7 +20,7 @@ const UploadHeader = () => {
           className={cx('avatar-button')}
           onClick={() => navigate('/profile')}
         >
-          <img src={user.avatarUrl} alt='avatar' className={cx('img-avatar')} />
+          <img src={avatarUrl} alt='avatar' className={cx('img-avatar')} />
         </button>
       </div>
     </div>

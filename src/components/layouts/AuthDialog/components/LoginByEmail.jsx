@@ -3,8 +3,8 @@ import styles from './LoginByEmail.module.scss';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
-import { useLogin } from '../../../../hooks/LoginContext';
-import axiosInstance from '../../../../service/axiosInstance';
+import { useLogin } from '../../../../contexts/LoginContext';
+import useAxios from '../../../../service/useAxios';
 import LoginSubmitButton from '../../../UI/LoginSubmitButton';
 
 const cx = classNames.bind(styles);
@@ -15,6 +15,8 @@ const LoginByEmail = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const axiosInstance = useAxios();
 
   const { setShowLogin, setIsLogin } = useLogin();
 
@@ -43,13 +45,15 @@ const LoginByEmail = () => {
       const userResponse = await axiosInstance.get('users/myInfo', {
         skipAuth: false,
       });
+      console.log(userResponse.data.result);
+      localStorage.setItem('tiktokUsername', userResponse.data.result.username);
       localStorage.setItem(
-        'tiktokUser',
-        JSON.stringify(userResponse.data.result),
+        'tiktokAvatarUrl',
+        userResponse.data.result.avatarUrl,
       );
     } catch (error) {
       setError(error.response.data.message);
-      alert(error);
+      alert(error.response.data.message);
     } finally {
       setLoading(false);
     }

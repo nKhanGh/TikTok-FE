@@ -50,7 +50,7 @@ const UploadSidebar = ({ chooseButton, setChooseButton }) => {
   );
 };
 
-UploadSidebar.PropTypes = {
+UploadSidebar.propTypes = {
   chooseButton: PropTypes.string.isRequired,
   setChooseButton: PropTypes.func.isRequired,
 };

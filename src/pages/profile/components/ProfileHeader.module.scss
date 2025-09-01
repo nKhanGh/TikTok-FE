@@ -1,0 +1,99 @@
+.wrapper {
+  width: 980px;
+  height: 212px;
+  display: flex;
+  position: relative;
+}
+
+.header-avatar {
+  width: 212px;
+  height: 212px;
+  border-radius: 50%;
+}
+
+.header-info {
+  margin-left: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+.header-name {
+  width: 100%;
+  display: flex;
+  font-size: 18px;
+  align-items: center;
+  color: #ffffffe6;
+  height: 30px;
+  gap: 12px;
+}
+
+.header-username {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.header-edit {
+  padding: 1px 16px;
+  color: #fff;
+  background-color: #fe2c55;
+  height: 40px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.header-button {
+  background-color: #ffffff21;
+  border: none;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.header-button:hover {
+  background-color: #ffffff30;
+}
+
+.square-button {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+}
+
+.rectangle-button {
+  padding: 1px 16px;
+}
+
+.header-interaction {
+  display: flex;
+  gap: 20px;
+}
+
+.interaction-container {
+  display: flex;
+  gap: 6px;
+}
+
+.interaction-num {
+  color: #fff;
+  font-weight: 600;
+  font-size: 17px;
+}
+
+.interaction-content {
+  border: none;
+  background-color: transparent;
+  color: #ffffffbf;
+}
+
+.header-bio {
+  color: #fff;
+}

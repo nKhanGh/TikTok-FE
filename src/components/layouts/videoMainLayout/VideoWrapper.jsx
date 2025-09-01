@@ -1,12 +1,12 @@
 import classNames from 'classnames/bind';
 import styles from './VideoWrapper.module.scss';
 
-import { LikedProvider } from '../../../hooks/LikedContext';
+import { LikedProvider } from '../../../contexts/LikedContext';
 import InteractionContainer from './components/InteractionContainer';
 import VideoContainer from './components/VideoContainer';
-import { useComment } from '../../../hooks/CommentContext';
+import { useComment } from '../../../contexts/CommentContext';
 import ControlContainer from './components/ControlContainer';
-import ProfileButton from './components/ProfileButton';
+import ProfileButton from '../ProfileButton/ProfileButton';
 
 const cx = classNames.bind(styles);
 

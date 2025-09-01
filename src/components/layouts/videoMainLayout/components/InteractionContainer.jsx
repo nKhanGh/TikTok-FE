@@ -12,8 +12,8 @@ import {
   faPlus,
   faShare,
 } from '@fortawesome/free-solid-svg-icons';
-import { useLiked } from '../../../../hooks/LikedContext';
-import { useComment } from '../../../../hooks/CommentContext';
+import { useLiked } from '../../../../contexts/LikedContext';
+import { useComment } from '../../../../contexts/CommentContext';
 
 const cx = classNames.bind(styles);
 

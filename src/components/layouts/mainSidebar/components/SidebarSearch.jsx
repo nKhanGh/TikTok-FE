@@ -4,7 +4,7 @@ import SidebarSearchHeader from './SidebarSearchHeader';
 import SidebarSearchHistory from './SidebarSearchHistory';
 import { CSSTransition } from 'react-transition-group';
 import { useRef } from 'react';
-import { useFinding } from '../../../../hooks/FindingContext';
+import { useFinding } from '../../../../contexts/FindingContext';
 
 const cx = classNames.bind(styles);
 

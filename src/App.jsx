@@ -1,6 +1,6 @@
 import { BrowserRouter, useRoutes } from 'react-router-dom';
 import { AppRoutes } from './routes/AppRoutes';
-import { LoginProVider } from './hooks/LoginContext';
+import { LoginProVider } from './contexts/LoginContext';
 
 const AppRoutesWrapper = () => {
   const routes = useRoutes(AppRoutes);

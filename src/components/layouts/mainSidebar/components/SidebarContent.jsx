@@ -15,7 +15,7 @@ import {
   faUserPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
-import { useFinding } from '../../../../hooks/FindingContext';
+import { useFinding } from '../../../../contexts/FindingContext';
 
 import avatar from './avatar.png';
 
@@ -30,7 +30,11 @@ const navItems = [
   { path: '/messages', icon: faPaperPlane, content: 'Message' },
   { path: '/activity', icon: faEnvelope, content: 'Activity' },
   { path: '/upload', icon: faCirclePlus, content: 'Up load' },
-  { path: '/profile', icon: faUserAstronaut, content: 'Profile' },
+  {
+    path: `/@${localStorage.getItem('tiktokUsername')}`,
+    icon: faUserAstronaut,
+    content: 'Profile',
+  },
   { path: '/more', icon: faEllipsis, content: 'More' },
 ];
 

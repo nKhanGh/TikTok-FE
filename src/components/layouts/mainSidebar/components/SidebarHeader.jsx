@@ -5,7 +5,7 @@ import singleLogo from '@/assets/images/singleLogo.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import { useFinding } from '../../../../hooks/FindingContext';
+import { useFinding } from '../../../../contexts/FindingContext';
 
 const cx = classNames.bind(styles);
 

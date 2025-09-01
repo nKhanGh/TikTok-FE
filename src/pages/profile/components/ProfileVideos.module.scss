@@ -1,0 +1,41 @@
+.wrapper {
+  width: 1224px;
+  margin-top: 20px;
+}
+
+.video-header {
+  display: flex;
+}
+
+.video-buttons {
+  display: flex;
+  position: relative;
+}
+
+.video-button {
+  height: 44px;
+  // width: 146px;
+  padding: 0px 32px;
+  border: none;
+  background-color: transparent;
+  color: #ffffff80;
+  font-size: 18px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.video-button-active {
+  color: #fff;
+}
+
+.underline {
+  content: '';
+  border-bottom: solid #fff 2px;
+  position: absolute;
+  bottom: 0px;
+  transition: all 0.3s ease;
+}

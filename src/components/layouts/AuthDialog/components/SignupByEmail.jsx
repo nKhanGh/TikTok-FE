@@ -3,7 +3,7 @@ import styles from './SignupByEmail.module.scss';
 import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import axiosInstance from '../../../../service/axiosInstance';
+import useAxios from '../../../../service/useAxios';
 import { cTypes } from './DialogComponentType';
 import PropTypes from 'prop-types';
 import BirthdayContainer from './SignupByEmail/BirthdayContainer';
@@ -28,6 +28,8 @@ const SignupByEmail = ({ setCType, toEmail, setToEmail }) => {
 
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const axiosInstance = useAxios();
 
   const isMounted = useRef(false);
   const isValidEmail = (email) =>
@@ -76,7 +78,8 @@ const SignupByEmail = ({ setCType, toEmail, setToEmail }) => {
       setError('');
       console.log(response.data.result);
     } catch (error) {
-      console.log(error.response.data.message);
+      console.log(error.data.message);
+      alert(error.data.message);
     }
   };
 
@@ -98,9 +101,16 @@ const SignupByEmail = ({ setCType, toEmail, setToEmail }) => {
       console.log(response.data.result);
       const token = response.data.result.token;
       localStorage.setItem('tiktokToken', token);
+      const infoResponse = await axiosInstance.get('/users/myInfo', {
+        skipAuth: false,
+      });
+      localStorage.setItem(
+        'tiktokAvatarUrl',
+        infoResponse.data.result.avatarUrl,
+      );
       setCType(cTypes.username);
     } catch (error) {
-      console.log(error.response);
+      alert(error.response?.data?.message);
     }
   };
 
