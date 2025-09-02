@@ -14,7 +14,6 @@
 
 .video-button {
   height: 44px;
-  // width: 146px;
   padding: 0px 32px;
   border: none;
   background-color: transparent;
@@ -38,4 +37,31 @@
   position: absolute;
   bottom: 0px;
   transition: all 0.3s ease;
+}
+
+.video-container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 24px 16px;
+  margin-top: 32px;
+}
+
+.video-element {
+  width: 100%;
+  height: 250px;
+  border-radius: 8px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+@media (max-width: 1272px) {
+  .video-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .video-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

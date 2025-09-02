@@ -17,7 +17,7 @@ import {
 import { NavLink } from 'react-router-dom';
 import { useFinding } from '../../../../contexts/FindingContext';
 
-import avatar from './avatar.png';
+import avatar from './avatar.jpg';
 
 const cx = classNames.bind(styles);
 

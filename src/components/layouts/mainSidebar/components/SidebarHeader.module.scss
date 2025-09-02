@@ -14,7 +14,7 @@
 .search-button {
   margin-top: 4px;
   height: 40px;
-  width: 40px;
+  width: 208px;
   display: flex;
   align-items: center;
   text-align: center;
@@ -24,12 +24,19 @@
   margin-left: -8px;
   cursor: pointer;
   transition: width 0.4s ease;
+
+  @media (max-width: 1024px) {
+    width: 40px;
+  }
 }
 
 .search-button-content {
   color: #ffffff66;
   font-size: 14px;
   margin-right: 53.16px;
+  @media (max-width: 1024px) {
+    display: none;
+  }
 }
 
 .search-button-icon {

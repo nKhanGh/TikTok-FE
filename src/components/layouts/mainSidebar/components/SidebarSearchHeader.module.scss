@@ -1,35 +1,34 @@
 .sidebarSearch-header {
-    display: flex;
-    width: 100%;
-    padding: 20px 0px 20px 14px;
-    position: sticky;
-    top: 0;
-    background-color: #000;
-    z-index: 2;
+  display: flex;
+  width: 100%;
+  padding: 20px 0px 26px 14px;
+  position: sticky;
+  top: 0;
+  background-color: #000;
+  z-index: 2;
 }
 
-.searchHeader-content{
-    font-weight: 700;
-    font-size: 18px;
+.searchHeader-content {
+  font-weight: 700;
+  font-size: 20px;
 }
 
-
-.searchHeader-close{
-    position: absolute;
-    right: 0;
-    background-color: #ffffff21;
-    border-radius: 100%;
-    width: 28px;
-    height: 28px;   
-    text-align: center;
-    line-height: 28px;
-    margin-right: 12px;
-    font-size: 12px;
-    cursor: pointer;
-    border:none;
-    color: #fff;
+.searchHeader-close {
+  position: absolute;
+  right: 0;
+  background-color: #ffffff21;
+  border-radius: 100%;
+  width: 28px;
+  height: 28px;
+  text-align: center;
+  line-height: 28px;
+  margin-right: 12px;
+  font-size: 12px;
+  cursor: pointer;
+  border: none;
+  color: #fff;
 }
 
-.searchHeader-close:hover{
-    background-color: #ffffff40;
+.searchHeader-close:hover {
+  background-color: #ffffff40;
 }

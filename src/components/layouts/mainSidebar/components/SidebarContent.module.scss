@@ -9,13 +9,15 @@
   align-items: center;
   text-align: left;
   height: 40px;
+  width: 208px;
   background-color: #000;
   border: none;
   text-decoration: none;
   border-radius: 8px;
-  width: 208px;
   padding-left: 4px;
+  margin-left: 6px;
 }
+
 .sidebar-content-element.sidebar-nav-active {
   color: rgb(255, 59, 92);
 }
@@ -27,7 +29,7 @@
 .sidebar-content-icon {
   width: 21px;
   height: 23.47px;
-  margin-left: 10px;
+  margin-left: 6px;
 }
 
 .sidebar-nav-content {
@@ -57,4 +59,18 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
+}
+
+@media (max-width: 1024px) {
+  .sidebar-content {
+    width: 58px;
+  }
+
+  .sidebar-content-element {
+    width: 40px;
+  }
+
+  .sidebar-nav-content {
+    display: none;
+  }
 }

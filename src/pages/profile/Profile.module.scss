@@ -9,4 +9,35 @@
   min-height: calc(1px + 100vh);
   max-width: calc(85em + 4rem);
   margin-left: 248px;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  overflow-y: auto;
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #999; /* màu thanh trượt */
+    border-radius: 4px; /* bo góc */
+    border: 2px solid #f0f0f0;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+}
+
+/* Toàn bộ trang */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #141414;
+  border-radius: 4px;
+  border: none;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
 }

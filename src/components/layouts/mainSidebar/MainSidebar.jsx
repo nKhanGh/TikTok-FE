@@ -14,7 +14,7 @@ const MainSideBar = () => {
     <div style={{ display: 'flex' }}>
       <div
         className={cx('wrapper')}
-        style={useFinding().isFinding ? { width: '66px' } : {}}
+        style={useFinding().isFinding ? { width: '72px' } : {}}
       >
         <SidebarHeader />
         <div className={cx('wrapper-content')}>

@@ -15,7 +15,6 @@ const userCanSee = ['Followers', 'Freind', 'Only you'];
 
 const UploadPreviewInfo = ({ selectedFile, videoFileId, setSelectedFile }) => {
   const [caption, setCaption] = useState(selectedFile.name);
-  const [hashtags, sethashtags] = useState([]);
   const [uploadContent, setUploadContent] = useState(() => {
     const filename = selectedFile.name;
     const dotIndex = filename.lastIndexOf('.');
@@ -36,12 +35,9 @@ const UploadPreviewInfo = ({ selectedFile, videoFileId, setSelectedFile }) => {
     e.preventDefault();
     let tmpHashtags = [];
     uploadContent.split('#').forEach((a, index) => {
-      if (index == 0) setCaption(a);
+      if (index == 0 && uploadContent[0] != '#') setCaption(a);
       else tmpHashtags.push(a);
     });
-    sethashtags(tmpHashtags);
-
-    console.log(caption, hashtags, videoFileId);
 
     try {
       const response = await axiosInstance.post(
@@ -49,7 +45,7 @@ const UploadPreviewInfo = ({ selectedFile, videoFileId, setSelectedFile }) => {
         {
           videoFileId,
           caption,
-          hashtags,
+          hashtags: tmpHashtags,
         },
         { skipAuth: false },
       );

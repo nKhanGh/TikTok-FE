@@ -10,6 +10,7 @@ const UploadHeader = () => {
   const navigate = useNavigate();
 
   const avatarUrl = localStorage.getItem('tiktokAvatarUrl');
+  const username = localStorage.getItem('tiktokUsername');
   return (
     <div className={cx('wrapper')}>
       <div className={cx('tiktok-icon-container')}>
@@ -18,7 +19,7 @@ const UploadHeader = () => {
       <div className={cx('tiktok-avatar-container')}>
         <button
           className={cx('avatar-button')}
-          onClick={() => navigate('/profile')}
+          onClick={() => navigate(`/@${username}`)}
         >
           <img src={avatarUrl} alt='avatar' className={cx('img-avatar')} />
         </button>
