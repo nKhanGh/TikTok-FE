@@ -9,6 +9,7 @@
 .video {
   max-width: 930px;
   max-height: calc(100vh - 32px);
+  min-height: 374px;
   display: block;
   object-fit: coer;
   border-radius: 12px;

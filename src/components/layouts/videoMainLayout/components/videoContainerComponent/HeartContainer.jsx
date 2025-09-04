@@ -23,7 +23,7 @@ const HeartContainer = ({ hearts, handleCheckVideoClick }) => {
             exit: cx('heart-container-exit'),
             exitActive: cx('heart-container-exit-active'),
           }}
-          nodeRef={heart.ref}
+          nodeRef={heart.heartRef}
           unmountOnExit
         >
           <button
@@ -33,7 +33,7 @@ const HeartContainer = ({ hearts, handleCheckVideoClick }) => {
               left: heart.x,
               top: heart.y,
             }}
-            ref={heart.ref}
+            ref={heart.heartRef}
           >
             <FontAwesomeIcon
               icon={faHeart}

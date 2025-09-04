@@ -1,31 +1,32 @@
 import classNames from 'classnames/bind';
 import styles from './VideoContainer.module.scss';
-import demo1 from '../demo1.mp4';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { useLiked } from '../../../../contexts/LikedContext';
 import HeartContainer from './videoContainerComponent/HeartContainer';
 import VolumeContainer from './videoContainerComponent/VolumeContainer';
 import PauseContainer from './videoContainerComponent/PauseContainer';
 import SettingWrapper from './videoContainerComponent/SettingWrapper';
 import { useComment } from '../../../../contexts/CommentContext';
+import PropTypes from 'prop-types';
 
 const cx = classNames.bind(styles);
 
 const iconTypes = ['NULL', 'PAUSE', 'PLAY', 'MUTED', 'UNMUTED'];
 
-const VideoContainer = () => {
+const VideoContainer = forwardRef(({ videoId }, ref) => {
+  //UI--------------------------------------------------------------------------------------
   const [showIcon, setShowIcon] = useState(false);
   const [iconType, setIconType] = useState(iconTypes[0]);
   const [volume, setVolume] = useState(0.5);
   const [isMuted, setIsMuted] = useState(false);
   const [hearts, setHearts] = useState([]);
+  const [isDragging, setIsDragging] = useState(false);
 
   const { isLiked, setIsLiked, numLiked, setNumLiked } = useLiked();
-
-  const videoRef = useRef(null);
   const progressRef = useRef(null);
   const dotRef = useRef(null);
+  const videoRef = useRef(null);
 
   let clickTimeout = null;
   let clickCount = 0;
@@ -77,9 +78,9 @@ const VideoContainer = () => {
     );
 
   const handleShowHeart = (e) => {
+    console.log(ref);
     clearTimeout(clickTimeout);
     clickTimeout = null;
-
     const id = Date.now();
     if (!videoRef.current) return;
 
@@ -87,12 +88,13 @@ const VideoContainer = () => {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     const angle = Math.floor(Math.random() * 60) - 30;
-    const ref = React.createRef();
+    const heartRef = React.createRef();
 
-    const newHeart = { id, x, y, angle, ref, show: true };
+    const newHeart = { id, x, y, angle, heartRef, show: true };
+    console.log(newHeart);
     setHearts((prev) => [...prev, newHeart]);
 
-    setTimeout(hideHeart(id), 1000);
+    setTimeout(() => hideHeart(id), 1000);
     setTimeout(() => {
       setHearts((prev) => prev.filter((h) => h.id !== id));
     }, 1600);
@@ -147,6 +149,52 @@ const VideoContainer = () => {
       videoRef.current.currentTime = percent * videoRef.current.duration;
   };
 
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    updateProgress(e); // gọi 1 lần ngay lúc bấm
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    updateProgress(e);
+  };
+
+  const handleMouseUp = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+
+    const video = videoRef.current;
+    const dot = dotRef.current;
+    const percent = parseFloat(dot.dataset.percent || 0);
+    video.currentTime = percent * video.duration;
+  };
+
+  const updateProgress = (e) => {
+    const video = videoRef.current;
+    const progress = progressRef.current;
+    const dot = dotRef.current;
+
+    const rect = video.getBoundingClientRect();
+    const moveX = e.clientX - rect.left;
+    const width = rect.width;
+    const percent = Math.min(Math.max(moveX / width, 0), 1);
+
+    progress.style.width = `${percent * 100}%`;
+    dot.style.left = `calc(${percent * 100}% - 10px)`;
+
+    dot.dataset.percent = percent;
+  };
+
+  // gắn listener global cho mousemove/mouseup
+  useEffect(() => {
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging]);
+
   useEffect(() => {
     const video = videoRef.current;
     const progress = progressRef.current;
@@ -163,7 +211,7 @@ const VideoContainer = () => {
 
     const handlePlay = () =>
       (animationFrameId = requestAnimationFrame(updateProgress));
-    const handleEnd = () => cancelAnimationFrame(updateProgress);
+    const handleEnd = () => cancelAnimationFrame(animationFrameId);
 
     video.addEventListener('play', handlePlay);
     video.addEventListener('pause', handleEnd);
@@ -177,6 +225,10 @@ const VideoContainer = () => {
     };
   }, []);
 
+  useEffect(() => {
+    ref(videoRef.current);
+  }, []);
+
   return (
     <div className={cx('video-container')}>
       <video
@@ -186,7 +238,6 @@ const VideoContainer = () => {
         loop
         style={useComment().showComment ? { maxWidth: '758px' } : {}}
       >
-        <source src={demo1} type='video/mp4' />
         <track
           src='captions_en.vtt'
           kind='captions'
@@ -198,6 +249,7 @@ const VideoContainer = () => {
       <button
         className={cx('progress-container')}
         onClick={handleProgressClick}
+        onMouseDown={handleMouseDown}
       >
         <div ref={dotRef} className={cx('progress-dot')}></div>
         <div className={cx('progress-bar')}>
@@ -226,6 +278,6 @@ const VideoContainer = () => {
       <SettingWrapper />
     </div>
   );
-};
+});
 
 export default VideoContainer;

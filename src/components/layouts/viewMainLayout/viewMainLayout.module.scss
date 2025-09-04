@@ -1,3 +1,19 @@
 .wrapper {
-  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+  position: fixed;
+  top: 0;
+  left: 240px;
+  width: calc(100vw - 238px);
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.wrapper > * {
+  scroll-snap-align: start;
+  // height: 100vh;
 }

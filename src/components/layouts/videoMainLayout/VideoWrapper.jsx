@@ -7,10 +7,11 @@ import VideoContainer from './components/VideoContainer';
 import { useComment } from '../../../contexts/CommentContext';
 import ControlContainer from './components/ControlContainer';
 import ProfileButton from '../ProfileButton/ProfileButton';
+import { forwardRef } from 'react';
 
 const cx = classNames.bind(styles);
 
-const VideoWrapper = () => {
+const VideoWrapper = forwardRef(({ videoId }, ref) => {
   const { showComment } = useComment();
 
   return (
@@ -20,14 +21,12 @@ const VideoWrapper = () => {
         style={showComment ? { width: '836px', padding: '0px ' } : {}}
       >
         <div className={cx('video-container')}>
-          <VideoContainer />
+          <VideoContainer videoId={videoId} ref={ref} />
           <InteractionContainer />
         </div>
-        <ControlContainer />
-        {!showComment && <ProfileButton />}
       </div>
     </LikedProvider>
   );
-};
+});
 
 export default VideoWrapper;

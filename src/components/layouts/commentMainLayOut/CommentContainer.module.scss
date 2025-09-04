@@ -22,6 +22,10 @@
   width: 384px;
   background-color: #1e1e1e;
   color: #ffffffe6;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  padding: 12px 0px 12px 12px;
 }
 
 .comment-header {
@@ -30,7 +34,8 @@
   top: 0;
   background-color: #1e1e1e;
   z-index: 1;
-  padding: 12px 8px 0px 12px;
+  height: 28px;
+  padding-right: 8px;
 }
 
 .comment-header-content {
@@ -99,9 +104,6 @@
   color: #ffffff99;
 }
 
-.comment-time {
-}
-
 .comment-reply {
   color: #ffffff99;
   background-color: transparent;
@@ -151,8 +153,8 @@
 .footer {
   position: sticky;
   bottom: 0;
-  padding: 12px 0px 12px 12px;
   background-color: #1e1e1e;
+  height: 45.6px;
 }
 
 .footer-content {

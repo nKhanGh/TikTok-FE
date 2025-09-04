@@ -11,36 +11,38 @@ import {
 import avatar from './avatar.jpg';
 import { useRef, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
+import PropTypes from 'prop-types';
 
 const cx = classNames.bind(styles);
 
-const commentList = [
-  {
-    name: 'khang1',
-    content: 'Messi or Nguyen Huu Khang is the goat of football?',
-    timePost: Date.now,
-  },
-  { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now },
-  { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now },
-  { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now },
-  { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now },
-  { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now },
-  { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now },
-  { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now },
-  { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now },
-  { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now },
-  { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now },
-  { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now },
-  { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now },
-  { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now },
-  { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now },
-  { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now },
-  { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now },
-];
-
-const CommentContainer = () => {
-  const { showComment, setShowComment, numComment, setNumComment } =
-    useComment();
+const CommentContainer = ({ videoId }) => {
+  const { showComment, setShowComment, numComment } = useComment();
+  const commentList = [
+    {
+      name: 'khang1',
+      content: 'Messi or Nguyen Huu Khang is the goat of football?',
+      timePost: Date.now,
+    },
+    { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now() },
+    { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now() },
+    { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now() },
+    { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now() },
+    { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now() },
+    { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now() },
+    { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now() },
+    { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now() },
+    { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now() },
+    { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now() },
+    { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now() },
+    { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now() },
+    { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now() },
+    { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now() },
+    { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now() },
+    { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now() },
+    { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now() },
+    { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now() },
+    { name: 'khang1', content: 'MEssiiiiiiii', timePost: Date.now() },
+  ];
   const [comment, setComment] = useState('');
   const nodeRef = useRef(null);
   return (
@@ -77,7 +79,7 @@ const CommentContainer = () => {
                 <div className={cx('comment-content')}>{comment.content}</div>
                 <div className={cx('comment-footer')}>
                   <div className={cx('comment-time')}>
-                    {comment.timePost} ago
+                    {/* {comment.timePost} ago */} ago
                   </div>
                   <button className={cx('comment-reply')}>Reply</button>
                 </div>
@@ -115,6 +117,10 @@ const CommentContainer = () => {
       </div>
     </CSSTransition>
   );
+};
+
+CommentContainer.propTypes = {
+  videoId: PropTypes.string.isRequired,
 };
 
 export default CommentContainer;

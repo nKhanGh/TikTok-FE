@@ -5,6 +5,7 @@
 
 .profile-container {
   width: 1288px;
+  height: 100vh;
   padding: 30px 24px 36px;
   min-height: calc(1px + 100vh);
   max-width: calc(85em + 4rem);
@@ -16,9 +17,9 @@
   overflow-y: auto;
 
   &::-webkit-scrollbar-thumb {
-    background-color: #999; /* màu thanh trượt */
+    background-color: #141414; /* màu thanh trượt */
     border-radius: 4px; /* bo góc */
-    border: 2px solid #f0f0f0;
+    border: none;
   }
 
   &::-webkit-scrollbar-track {
@@ -29,7 +30,7 @@
 /* Toàn bộ trang */
 ::-webkit-scrollbar {
   width: 8px;
-  height: 0;
+  // height: 8px;
 }
 
 ::-webkit-scrollbar-thumb {

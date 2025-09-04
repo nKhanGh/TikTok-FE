@@ -25,8 +25,7 @@ const InteractionContainer = () => {
   const [numShared] = useState(23);
 
   const { isLiked, setIsLiked, numLiked, setNumLiked } = useLiked();
-  const { showComment, setShowComment, numComment, setNumComment } =
-    useComment();
+  const { showComment, setShowComment, numComment } = useComment();
 
   return (
     <div className={cx('interaction-container')}>

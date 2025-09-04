@@ -5,6 +5,7 @@ import MainSideBar from '../../components/layouts/mainSidebar/MainSidebar';
 import ProfileButton from '../../components/layouts/ProfileButton/ProfileButton';
 import ProfileHeader from './components/ProfileHeader';
 import ProfileVideo from './components/ProfileVideos';
+import { CommentProvider } from '../../contexts/CommentContext';
 
 const cx = classNames.bind(styles);
 
@@ -15,7 +16,9 @@ const Profile = () => {
         <MainSideBar />
       </FindingProvider>
       <div className={cx('profile-button')}>
-        <ProfileButton />
+        <CommentProvider>
+          <ProfileButton />
+        </CommentProvider>
       </div>
       <div className={cx('profile-container')}>
         <ProfileHeader />

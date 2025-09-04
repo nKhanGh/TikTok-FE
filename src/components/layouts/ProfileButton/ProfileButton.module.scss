@@ -1,13 +1,14 @@
 .profile-button {
-  position: absolute;
+  position: fixed;
   top: 24px;
-  right: -40px;
+  right: 24px;
   background-color: #2c2c2ccc;
   border-radius: 28px;
   line-height: 48px;
   display: flex;
   align-items: center;
   padding: 8px;
+  z-index: 10000;
 }
 
 .line {
@@ -35,7 +36,7 @@
   background-color: transparent;
   border: none;
   font-size: 14px;
-  font-weight: 550;
+  font-weight: 500;
   cursor: pointer;
   border-radius: 20px;
 }
