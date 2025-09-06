@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { createContext, useContext, useMemo, useState } from 'react';
 
 const CommentContext = createContext(null);
@@ -14,6 +15,10 @@ export const CommentProvider = ({ children }) => {
   return (
     <CommentContext.Provider value={value}>{children}</CommentContext.Provider>
   );
+};
+
+CommentProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export const useComment = () => {

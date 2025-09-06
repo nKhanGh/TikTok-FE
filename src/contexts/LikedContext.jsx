@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useContext, useState, createContext, useMemo } from 'react';
 
 const LikedContext = createContext(null);
@@ -14,6 +15,10 @@ export const LikedProvider = ({ children }) => {
   return (
     <LikedContext.Provider value={value}>{children}</LikedContext.Provider>
   );
+};
+
+LikedProvider.propTypes = {
+  childreN: PropTypes.node.isRequired,
 };
 
 export const useLiked = () => {

@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
 import ProfileButton from '../ProfileButton/ProfileButton';
 import ControlContainer from '../videoMainLayout/components/ControlContainer';
+import { FollowProvider } from '../../../contexts/FollowContext';
 
 const cx = classNames.bind(styles);
 
@@ -98,24 +99,26 @@ const ViewMainLayout = ({ fetchVideo, hasMore, videoIds }) => {
   }, [currentIndex]);
   return (
     <div className={cx('wrapper')} ref={containerRef}>
-      <CommentProvider>
-        {videoIds.map((videoId, idx) => (
-          <div
-            style={{ height: '100vh' }}
-            key={videoId}
-            data-index={idx}
-            data-feed-item='1'
-          >
-            <VideoWrapper
-              videoId={videoId}
-              ref={(el) => (videoRefs.current[idx] = el)}
-            />
-          </div>
-        ))}
-        <CommentContainer videoId={activeVideoId} />
-        <ProfileButton />
-        <ControlContainer />
-      </CommentProvider>
+      <FollowProvider>
+        <CommentProvider>
+          {videoIds.map((videoId, idx) => (
+            <div
+              style={{ height: '100vh' }}
+              key={videoId}
+              data-index={idx}
+              data-feed-item='1'
+            >
+              <VideoWrapper
+                videoId={videoId}
+                ref={(el) => (videoRefs.current[idx] = el)}
+              />
+            </div>
+          ))}
+          <CommentContainer videoId={activeVideoId} />
+          <ProfileButton />
+          <ControlContainer />
+        </CommentProvider>
+      </FollowProvider>
     </div>
   );
 };

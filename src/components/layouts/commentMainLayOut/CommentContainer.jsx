@@ -80,7 +80,6 @@ const CommentContainer = ({ videoId }) => {
         `/comments/byVideo/${videoId}?page=${curPage}&size=${PAGE_SIZE}`,
       );
       const result = response?.data?.result;
-      console.log(result);
       setComments((prev) => {
         const merged = [...prev, ...result.comments];
         const unique = Array.from(
@@ -114,7 +113,6 @@ const CommentContainer = ({ videoId }) => {
   const fetchReplies = async (commentId) => {
     if (!visibleRepliesMap[commentId].hasMore) return;
     try {
-      console.log(visibleRepliesMap);
       const page = visibleRepliesMap[commentId].nextPage;
       const response = await axiosInstance.get(
         `/comments/replies/${commentId}?page=${page}&size=${replies_step}`,

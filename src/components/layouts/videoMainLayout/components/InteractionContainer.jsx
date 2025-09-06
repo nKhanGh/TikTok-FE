@@ -17,11 +17,12 @@ import { useComment } from '../../../../contexts/CommentContext';
 import PropTypes from 'prop-types';
 import useAxios from '../../../../service/useAxios';
 import { useLocation } from 'react-router-dom';
+import { useFollow } from '../../../../contexts/FollowContext';
 
 const cx = classNames.bind(styles);
 
 const InteractionContainer = ({ videoInfo }) => {
-  const [isFollowed, setIsFollowed] = useState(false);
+  const userId = videoInfo?.userPost?.id;
   const [isSaved, setIsSaved] = useState(false);
   const [isShare, setIsShare] = useState(false);
   const [numSaved, setNumSaved] = useState(130);
@@ -35,9 +36,11 @@ const InteractionContainer = ({ videoInfo }) => {
 
   const { showComment, setShowComment, numComment } = useComment();
 
+  const { isFollowedMap, updateFollow } = useFollow();
+
   const handleLikeVideo = async () => {
     try {
-      const result = await axiosInstance.post(`/videos/${videoInfo.id}/like`, {
+      await axiosInstance.post(`/videos/${videoInfo.id}/like`, {
         skipAuth: false,
       });
       setNumLiked(isLiked ? numLiked - 1 : numLiked + 1);
@@ -56,6 +59,29 @@ const InteractionContainer = ({ videoInfo }) => {
     );
   }, [videoInfo, username]);
 
+  const handleFollowUser = async () => {
+    try {
+      const response = await axiosInstance.post(`/users/${userId}/follow`);
+      console.log(response);
+      updateFollow(userId, !isFollowedMap[userId]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    const checkIsFollow = async () => {
+      try {
+        const response = await axiosInstance.get(`/users/isFollow/${userId}`);
+        const isFollowed = response.data.result;
+        updateFollow(userId, isFollowed);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    checkIsFollow();
+  }, [userId]);
+
   return (
     <div className={cx('interaction-container')}>
       <div className={cx('interaction-avatar-button')}>
@@ -66,12 +92,14 @@ const InteractionContainer = ({ videoInfo }) => {
         />
         <button
           className={cx('interaction-avatar-check')}
-          onClick={() => setIsFollowed(!isFollowed)}
+          onClick={handleFollowUser}
           style={
-            !isFollowed ? { backgroundColor: '#fe2c55', color: '#fff' } : {}
+            !isFollowedMap[userId]
+              ? { backgroundColor: '#fe2c55', color: '#fff' }
+              : {}
           }
         >
-          <FontAwesomeIcon icon={isFollowed ? faCheck : faPlus} />
+          <FontAwesomeIcon icon={isFollowedMap[userId] ? faCheck : faPlus} />
         </button>
       </div>
       <button
