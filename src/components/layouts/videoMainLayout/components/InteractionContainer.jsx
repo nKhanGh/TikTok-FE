@@ -1,6 +1,5 @@
 import classNames from 'classnames/bind';
 import styles from './InteractionContainer.module.scss';
-import avatar from '../avatar.jpg';
 
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,7 +15,6 @@ import { useLiked } from '../../../../contexts/LikedContext';
 import { useComment } from '../../../../contexts/CommentContext';
 import PropTypes from 'prop-types';
 import useAxios from '../../../../service/useAxios';
-import { useLocation } from 'react-router-dom';
 import { useFollow } from '../../../../contexts/FollowContext';
 
 const cx = classNames.bind(styles);

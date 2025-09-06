@@ -177,7 +177,7 @@ const ProfileEdit = ({ setIsEditting, user, setUser }) => {
   const [bio, setBio] = useState(user.bio);
   const [isTrueUsername, setIsTrueUsername] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   const [canSave, setCanSave] = useState(false);
   const { updateAvatar } = useAvatar();
 
@@ -290,6 +290,7 @@ UsernameInput.propTypes = {
   isTrueUsername: PropTypes.bool.isRequired,
   setIsTrueUsername: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  axiosInstance: PropTypes.node.isRequired,
 };
 
 NameInput.propTypes = {

@@ -11,8 +11,6 @@ const postTime = {
   schedule: 'schedule',
 };
 
-const userCanSee = ['Followers', 'Friend', 'Only you'];
-
 const UploadPreviewInfo = ({ selectedFile, videoFileId, setSelectedFile }) => {
   const [uploadContent, setUploadContent] = useState(() => {
     const filename = selectedFile.name;

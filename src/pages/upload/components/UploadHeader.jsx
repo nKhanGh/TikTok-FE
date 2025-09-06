@@ -1,7 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './UploadHeader.module.scss';
 import tiktokIcon from '@/assets/images/tiktokStudio.png';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLogin } from '../../../contexts/LoginContext';
 

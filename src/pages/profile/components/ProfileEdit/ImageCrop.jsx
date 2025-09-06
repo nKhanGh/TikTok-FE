@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import styles from './ImageCrop.module.scss';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft, faL } from '@fortawesome/free-solid-svg-icons';
+import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import Cropper from 'react-easy-crop';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -79,7 +79,7 @@ const ImageCrop = ({ setIsCropping, setSelectedFile, selectedFile }) => {
         >
           <FontAwesomeIcon icon={faAngleLeft} />
         </button>
-        Edit Photo
+        <span>Edit Photo</span>
       </div>
       <div className={cx('crop-container')}>
         <Cropper
@@ -118,7 +118,7 @@ const ImageCrop = ({ setIsCropping, setSelectedFile, selectedFile }) => {
         />
       </div>
       <div className={cx('progress-bar')}>
-        Zoom
+        <span>Zoom</span>
         <input
           ref={zoomBarRef}
           type='range'

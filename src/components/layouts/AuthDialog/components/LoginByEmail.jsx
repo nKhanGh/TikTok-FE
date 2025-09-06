@@ -13,8 +13,8 @@ const LoginByEmail = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [setError] = useState('');
+  const [setLoading] = useState(false);
 
   const axiosInstance = useAxios();
 
@@ -61,42 +61,39 @@ const LoginByEmail = () => {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <div className={cx('input-container')}>
-          <div className={cx('input-header')}>Email or username</div>
-          <input
-            type='text'
-            className={cx('input-element')}
-            placeholder='Email or username'
-            value={usernameOrEmail}
-            onChange={(e) => setUsernameOrEmail(e.target.value)}
-          />
-          <input
-            type={showPassword ? 'text' : 'password'}
-            className={cx('input-element')}
-            placeholder='Password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button
-            type='button'
-            className={cx('input-icon')}
-            onClick={() => setShowPassword(!showPassword)}
-          >
-            <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
-          </button>
-          <button type='button' className={cx('input-footer')}>
-            Forgot password?
-          </button>
-        </div>
-        <LoginSubmitButton
-          disabled={password.length === 0 || usernameOrEmail.length === 0}
-          content={'Login'}
+    <form onSubmit={handleSubmit}>
+      <div className={cx('input-container')}>
+        <div className={cx('input-header')}>Email or username</div>
+        <input
+          type='text'
+          className={cx('input-element')}
+          placeholder='Email or username'
+          value={usernameOrEmail}
+          onChange={(e) => setUsernameOrEmail(e.target.value)}
         />
-      </form>
-      {/* {loading ? "Logging in..." : "Log in"} */}
-    </>
+        <input
+          type={showPassword ? 'text' : 'password'}
+          className={cx('input-element')}
+          placeholder='Password'
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button
+          type='button'
+          className={cx('input-icon')}
+          onClick={() => setShowPassword(!showPassword)}
+        >
+          <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
+        </button>
+        <button type='button' className={cx('input-footer')}>
+          Forgot password?
+        </button>
+      </div>
+      <LoginSubmitButton
+        disabled={password.length === 0 || usernameOrEmail.length === 0}
+        content={'Login'}
+      />
+    </form>
   );
 };
 

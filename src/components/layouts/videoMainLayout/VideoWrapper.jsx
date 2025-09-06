@@ -7,7 +7,6 @@ import VideoContainer from './components/VideoContainer';
 import { useComment } from '../../../contexts/CommentContext';
 import { forwardRef, useEffect, useState } from 'react';
 import useAxios from '../../../service/useAxios';
-import { FollowProvider } from '../../../contexts/FollowContext';
 
 const cx = classNames.bind(styles);
 

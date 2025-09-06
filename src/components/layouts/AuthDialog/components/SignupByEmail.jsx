@@ -27,8 +27,8 @@ const SignupByEmail = ({ setCType, toEmail, setToEmail }) => {
   const [validCode, setValidCode] = useState(true);
   const [sendCode, setSendCode] = useState(false);
 
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [setError] = useState('');
+  const [setLoading] = useState(false);
 
   const { setUsername } = useLogin();
 

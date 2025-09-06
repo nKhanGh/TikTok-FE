@@ -63,8 +63,8 @@ const ViewMainLayout = ({ fetchVideo, hasMore, videoIds }) => {
       fetchVideo();
     }
 
-    const minIdx = Math.max(0, currentIndex - 1);
-    const maxIdx = Math.min(videoIds.length - 1, currentIndex + 1);
+    const minIdx = Math.max(0, currentIndex - 2);
+    const maxIdx = Math.min(videoIds.length - 1, currentIndex + 2);
 
     for (let i = 0; i < videoIds.length; i++) {
       const vEl = videoRefs.current[i];

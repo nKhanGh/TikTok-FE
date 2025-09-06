@@ -82,7 +82,7 @@ const VideoContainer = forwardRef(({ videoInfo }, ref) => {
 
   const handleLikeVideo = async () => {
     try {
-      const result = await axiosInstance.post(`/videos/${videoInfo.id}/like`, {
+      await axiosInstance.post(`/videos/${videoInfo.id}/like`, {
         skipAuth: false,
       });
       setNumLiked(isLiked ? numLiked - 1 : numLiked + 1);
@@ -108,9 +108,13 @@ const VideoContainer = forwardRef(({ videoInfo }, ref) => {
     const newHeart = { id, x, y, angle, heartRef, show: true };
     setHearts((prev) => [...prev, newHeart]);
 
+    const removeHeartById = (prevHearts, id) => {
+      return prevHearts.filter((h) => h.id !== id);
+    };
+
     setTimeout(() => hideHeart(id), 1000);
     setTimeout(() => {
-      setHearts((prev) => prev.filter((h) => h.id !== id));
+      setHearts((prev) => removeHeartById(prev, id));
     }, 1600);
   };
 
@@ -304,5 +308,9 @@ const VideoContainer = forwardRef(({ videoInfo }, ref) => {
     </div>
   );
 });
+
+VideoContainer.propTypes = {
+  videoInfo: PropTypes.object.isRequired,
+};
 
 export default VideoContainer;

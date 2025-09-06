@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 
 const cx = classNames.bind(styles);
 
-const UploadContainer = ({ chooseButton, setChooseButton }) => {
+const UploadContainer = ({ chooseButton }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [videoId, setVideoId] = useState('');
@@ -63,7 +63,6 @@ const UploadContainer = ({ chooseButton, setChooseButton }) => {
 
 UploadContainer.propTypes = {
   chooseButton: PropTypes.string.isRequired,
-  setChooseButton: PropTypes.func.isRequired,
 };
 
 export default UploadContainer;
