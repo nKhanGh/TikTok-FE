@@ -193,6 +193,7 @@ const ProfileEdit = ({ setIsEditting, user, setUser }) => {
     formData.append('name', name);
     formData.append('bio', bio);
     setIsSaving(true);
+    console.log(selectedFile);
     try {
       const response = await axiosInstance.put(
         '/users/updatePublic',

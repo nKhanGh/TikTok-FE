@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import styles from './InteractionContainer.module.scss';
 import avatar from '../avatar.jpg';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBookmark,
@@ -14,24 +14,53 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useLiked } from '../../../../contexts/LikedContext';
 import { useComment } from '../../../../contexts/CommentContext';
+import PropTypes from 'prop-types';
+import useAxios from '../../../../service/useAxios';
+import { useLocation } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-const InteractionContainer = () => {
+const InteractionContainer = ({ videoInfo }) => {
   const [isFollowed, setIsFollowed] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [isShare, setIsShare] = useState(false);
   const [numSaved, setNumSaved] = useState(130);
   const [numShared] = useState(23);
 
+  const username = localStorage.getItem('tiktokUsername');
+
+  const axiosInstance = useAxios();
+
   const { isLiked, setIsLiked, numLiked, setNumLiked } = useLiked();
+
   const { showComment, setShowComment, numComment } = useComment();
+
+  const handleLikeVideo = async () => {
+    try {
+      const result = await axiosInstance.post(`/videos/${videoInfo.id}/like`, {
+        skipAuth: false,
+      });
+      setNumLiked(isLiked ? numLiked - 1 : numLiked + 1);
+      setIsLiked(!isLiked);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    setNumLiked(videoInfo?.likeCount);
+    setIsLiked(
+      videoInfo?.userLiked?.some(
+        (userLiked) => userLiked.username === username,
+      ),
+    );
+  }, [videoInfo, username]);
 
   return (
     <div className={cx('interaction-container')}>
       <div className={cx('interaction-avatar-button')}>
         <img
-          src={avatar}
+          src={videoInfo?.userPost?.avatarUrl}
           alt='Khang'
           className={cx('interaction-avatar-img')}
         />
@@ -47,10 +76,7 @@ const InteractionContainer = () => {
       </div>
       <button
         className={cx('interaction-button')}
-        onClick={() => {
-          setIsLiked(!isLiked);
-          setNumLiked(isLiked ? numLiked - 1 : numLiked + 1);
-        }}
+        onClick={handleLikeVideo}
         style={isLiked ? { color: '#fe2c55' } : {}}
       >
         <FontAwesomeIcon icon={faHeart} />
@@ -83,6 +109,10 @@ const InteractionContainer = () => {
       <div className={cx('interaction-num')}>{numShared}</div>
     </div>
   );
+};
+
+InteractionContainer.propTypes = {
+  videoInfo: PropTypes.object.isRequired,
 };
 
 export default InteractionContainer;

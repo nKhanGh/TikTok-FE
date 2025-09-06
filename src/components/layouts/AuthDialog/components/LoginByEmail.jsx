@@ -18,7 +18,7 @@ const LoginByEmail = () => {
 
   const axiosInstance = useAxios();
 
-  const { setShowLogin, setIsLogin } = useLogin();
+  const { setShowLogin, setIsLogin, setUsername } = useLogin();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,6 +47,7 @@ const LoginByEmail = () => {
       });
       console.log(userResponse.data.result);
       localStorage.setItem('tiktokUsername', userResponse.data.result.username);
+      setUsername(userResponse.data.result.username);
       localStorage.setItem(
         'tiktokAvatarUrl',
         userResponse.data.result.avatarUrl,

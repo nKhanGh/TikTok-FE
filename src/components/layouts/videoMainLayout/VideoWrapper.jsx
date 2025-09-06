@@ -5,14 +5,29 @@ import { LikedProvider } from '../../../contexts/LikedContext';
 import InteractionContainer from './components/InteractionContainer';
 import VideoContainer from './components/VideoContainer';
 import { useComment } from '../../../contexts/CommentContext';
-import ControlContainer from './components/ControlContainer';
-import ProfileButton from '../ProfileButton/ProfileButton';
-import { forwardRef } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
+import useAxios from '../../../service/useAxios';
 
 const cx = classNames.bind(styles);
 
 const VideoWrapper = forwardRef(({ videoId }, ref) => {
   const { showComment } = useComment();
+  const [videoInfo, setVideoInfo] = useState({});
+  const axiosInstance = useAxios();
+
+  useEffect(() => {
+    const fetchVideoInfo = async () => {
+      try {
+        const response = await axiosInstance.get(`/videos/public/${videoId}`);
+        const newVideoInfo = response.data.result;
+        setVideoInfo(newVideoInfo);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchVideoInfo();
+  }, []);
 
   return (
     <LikedProvider>
@@ -21,8 +36,8 @@ const VideoWrapper = forwardRef(({ videoId }, ref) => {
         style={showComment ? { width: '836px', padding: '0px ' } : {}}
       >
         <div className={cx('video-container')}>
-          <VideoContainer videoId={videoId} ref={ref} />
-          <InteractionContainer />
+          <VideoContainer videoInfo={videoInfo} ref={ref} />
+          <InteractionContainer videoInfo={videoInfo} />
         </div>
       </div>
     </LikedProvider>

@@ -1,11 +1,6 @@
-import { BrowserRouter, useRoutes } from 'react-router-dom';
-import { AppRoutes } from './routes/AppRoutes';
+import { BrowserRouter } from 'react-router-dom';
 import { LoginProVider } from './contexts/LoginContext';
-
-const AppRoutesWrapper = () => {
-  const routes = useRoutes(AppRoutes);
-  return <div>{routes}</div>;
-};
+import AppRoutesWrapper from './routes/AppRoutesWrapper';
 
 const App = () => {
   return (

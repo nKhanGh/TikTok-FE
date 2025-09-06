@@ -40,16 +40,13 @@ const ProfileButton = () => {
     return () => document.removeEventListener('mousedown', handleClickOutSide);
   }, []);
 
-  const { isLogin, setIsLogin, showLogin, setShowLogin } = useLogin();
+  const { isLogin, showLogin, setShowLogin, logout, username } = useLogin();
   const { showComment } = useComment();
 
   const handleLogout = () => {
     updateAvatar(null);
     setShowLogOut(false);
-    setIsLogin(false);
-    localStorage.removeItem('tiktokAvatarUrl');
-    localStorage.removeItem('tiktokUsername');
-    localStorage.removeItem('tiktokToken');
+    logout();
     navigate('/');
   };
 
@@ -101,7 +98,10 @@ const ProfileButton = () => {
               }}
             >
               <div className={cx('container')} ref={nodeRef}>
-                <NavLink to={'/profile'} className={cx('container-button')}>
+                <NavLink
+                  to={`/@${username}`}
+                  className={cx('container-button')}
+                >
                   <FontAwesomeIcon icon={faUser} /> View Profile
                 </NavLink>
                 <button

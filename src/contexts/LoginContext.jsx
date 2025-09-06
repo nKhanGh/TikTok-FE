@@ -9,6 +9,9 @@ export const LoginProVider = ({ children }) => {
     return !!token;
   });
   const [showLogin, setShowLogin] = useState(false);
+  const [username, setUsername] = useState(
+    localStorage.getItem('tiktokUsername'),
+  );
 
   const logout = () => {
     setIsLogin(false);
@@ -18,8 +21,16 @@ export const LoginProVider = ({ children }) => {
   };
 
   const value = useMemo(
-    () => ({ isLogin, setIsLogin, showLogin, setShowLogin, logout }),
-    [isLogin, showLogin],
+    () => ({
+      isLogin,
+      setIsLogin,
+      showLogin,
+      setShowLogin,
+      logout,
+      username,
+      setUsername,
+    }),
+    [isLogin, showLogin, username],
   );
 
   return (

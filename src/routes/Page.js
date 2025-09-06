@@ -1,7 +1,5 @@
 import { lazy } from 'react';
 
-const username = localStorage.getItem('tiktokUsername');
-
 export const pages = [
   {
     path: '/',
@@ -34,7 +32,7 @@ export const pages = [
     isPrivate: true,
   },
   {
-    path: `/@${username}`,
+    path: `/:username`,
     component: lazy(() => import('../pages/profile/Profile')),
     isPrivate: false,
   },

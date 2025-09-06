@@ -16,6 +16,19 @@
   transition: all ease 0.4s;
 }
 
+.videoInfo {
+  position: absolute;
+  color: #fff;
+  padding: 12px;
+  bottom: 0px;
+  left: 0px;
+  font-weight: 500;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .progress-dot {
   position: absolute;
   background-color: #fff;

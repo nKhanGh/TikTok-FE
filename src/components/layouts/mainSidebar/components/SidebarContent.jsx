@@ -18,25 +18,9 @@ import { NavLink } from 'react-router-dom';
 import { useFinding } from '../../../../contexts/FindingContext';
 
 import avatar from './avatar.jpg';
+import { useLogin } from '../../../../contexts/LoginContext';
 
 const cx = classNames.bind(styles);
-
-const navItems = [
-  { path: '/', icon: faHouse, content: 'For You' },
-  { path: '/explore', icon: faCompass, content: 'Explore' },
-  { path: '/following', icon: faUserPlus, content: 'Following' },
-  { path: '/friends', icon: faUserGroup, content: 'Friends' },
-  { path: '/live', icon: faStarOfLife, content: 'Live' },
-  { path: '/messages', icon: faPaperPlane, content: 'Message' },
-  { path: '/activity', icon: faEnvelope, content: 'Activity' },
-  { path: '/upload', icon: faCirclePlus, content: 'Up load' },
-  {
-    path: `/@${localStorage.getItem('tiktokUsername')}`,
-    icon: faUserAstronaut,
-    content: 'Profile',
-  },
-  { path: '/more', icon: faEllipsis, content: 'More' },
-];
 
 const userList = [
   { name: 'Lionel Messi1', username: 'leomessi1' },
@@ -48,6 +32,23 @@ const userList = [
 
 const SidebarContent = () => {
   const { isFinding } = useFinding();
+  const { username } = useLogin();
+  const navItems = [
+    { path: '/', icon: faHouse, content: 'For You' },
+    { path: '/explore', icon: faCompass, content: 'Explore' },
+    { path: '/following', icon: faUserPlus, content: 'Following' },
+    { path: '/friends', icon: faUserGroup, content: 'Friends' },
+    { path: '/live', icon: faStarOfLife, content: 'Live' },
+    { path: '/messages', icon: faPaperPlane, content: 'Message' },
+    { path: '/activity', icon: faEnvelope, content: 'Activity' },
+    { path: '/upload', icon: faCirclePlus, content: 'Up load' },
+    {
+      path: `/@${username}`,
+      icon: faUserAstronaut,
+      content: 'Profile',
+    },
+    { path: '/more', icon: faEllipsis, content: 'More' },
+  ];
   return (
     <>
       <div

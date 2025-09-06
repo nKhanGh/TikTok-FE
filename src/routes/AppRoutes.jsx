@@ -1,9 +1,9 @@
-import { pages } from './Page';
 import { Suspense } from 'react';
 import PrivateRoute from './PrivateRoute';
+import { pages } from './Page';
 
-const withSuspense = (element) => (
-  <Suspense fallback={<div>Loading...</div>}>{element}</Suspense>
+const withSuspense = (el) => (
+  <Suspense fallback={<div>Loading...</div>}>{el}</Suspense>
 );
 
 export const AppRoutes = pages.map(

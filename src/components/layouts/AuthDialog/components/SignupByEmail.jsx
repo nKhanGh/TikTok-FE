@@ -7,6 +7,7 @@ import useAxios from '../../../../service/useAxios';
 import { cTypes } from './DialogComponentType';
 import PropTypes from 'prop-types';
 import BirthdayContainer from './SignupByEmail/BirthdayContainer';
+import { useLogin } from '../../../../contexts/LoginContext';
 
 const cx = classNames.bind(styles);
 
@@ -28,6 +29,8 @@ const SignupByEmail = ({ setCType, toEmail, setToEmail }) => {
 
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const { setUsername } = useLogin();
 
   const axiosInstance = useAxios();
 
@@ -108,6 +111,8 @@ const SignupByEmail = ({ setCType, toEmail, setToEmail }) => {
         'tiktokAvatarUrl',
         infoResponse.data.result.avatarUrl,
       );
+      setUsername(infoResponse.data.result.username);
+      localStorage.setItem('tiktokUsername', infoResponse.data.result.username);
       setCType(cTypes.username);
     } catch (error) {
       alert(error.response?.data?.message);

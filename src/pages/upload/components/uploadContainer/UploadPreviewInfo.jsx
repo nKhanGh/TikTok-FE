@@ -11,10 +11,9 @@ const postTime = {
   schedule: 'schedule',
 };
 
-const userCanSee = ['Followers', 'Freind', 'Only you'];
+const userCanSee = ['Followers', 'Friend', 'Only you'];
 
 const UploadPreviewInfo = ({ selectedFile, videoFileId, setSelectedFile }) => {
-  const [caption, setCaption] = useState(selectedFile.name);
   const [uploadContent, setUploadContent] = useState(() => {
     const filename = selectedFile.name;
     const dotIndex = filename.lastIndexOf('.');
@@ -34,8 +33,11 @@ const UploadPreviewInfo = ({ selectedFile, videoFileId, setSelectedFile }) => {
   const handlePostVideo = async (e) => {
     e.preventDefault();
     let tmpHashtags = [];
+    let caption = '';
+    console.log(uploadContent);
     uploadContent.split('#').forEach((a, index) => {
-      if (index == 0 && uploadContent[0] != '#') setCaption(a);
+      console.log(a);
+      if (index == 0 && uploadContent[0] != '#') caption = a;
       else tmpHashtags.push(a);
     });
 

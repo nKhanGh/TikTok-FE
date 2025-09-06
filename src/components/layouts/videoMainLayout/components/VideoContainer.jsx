@@ -9,12 +9,13 @@ import PauseContainer from './videoContainerComponent/PauseContainer';
 import SettingWrapper from './videoContainerComponent/SettingWrapper';
 import { useComment } from '../../../../contexts/CommentContext';
 import PropTypes from 'prop-types';
+import useAxios from '../../../../service/useAxios';
 
 const cx = classNames.bind(styles);
 
 const iconTypes = ['NULL', 'PAUSE', 'PLAY', 'MUTED', 'UNMUTED'];
 
-const VideoContainer = forwardRef(({ videoId }, ref) => {
+const VideoContainer = forwardRef(({ videoInfo }, ref) => {
   //UI--------------------------------------------------------------------------------------
   const [showIcon, setShowIcon] = useState(false);
   const [iconType, setIconType] = useState(iconTypes[0]);
@@ -27,6 +28,8 @@ const VideoContainer = forwardRef(({ videoId }, ref) => {
   const progressRef = useRef(null);
   const dotRef = useRef(null);
   const videoRef = useRef(null);
+
+  const axiosInstance = useAxios();
 
   let clickTimeout = null;
   let clickCount = 0;
@@ -77,8 +80,20 @@ const VideoContainer = forwardRef(({ videoId }, ref) => {
       prev.map((h) => (h.id === id ? { ...h, show: false } : h)),
     );
 
+  const handleLikeVideo = async () => {
+    try {
+      const result = await axiosInstance.post(`/videos/${videoInfo.id}/like`, {
+        skipAuth: false,
+      });
+      setNumLiked(isLiked ? numLiked - 1 : numLiked + 1);
+      setIsLiked(!isLiked);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleShowHeart = (e) => {
-    console.log(ref);
+    if (!isLiked) handleLikeVideo();
     clearTimeout(clickTimeout);
     clickTimeout = null;
     const id = Date.now();
@@ -91,7 +106,6 @@ const VideoContainer = forwardRef(({ videoId }, ref) => {
     const heartRef = React.createRef();
 
     const newHeart = { id, x, y, angle, heartRef, show: true };
-    console.log(newHeart);
     setHearts((prev) => [...prev, newHeart]);
 
     setTimeout(() => hideHeart(id), 1000);
@@ -229,6 +243,9 @@ const VideoContainer = forwardRef(({ videoId }, ref) => {
     ref(videoRef.current);
   }, []);
 
+  const toString = (hashtags = []) =>
+    hashtags.reduce((acc, hashtag) => acc + ' #' + hashtag.tag, '');
+
   return (
     <div className={cx('video-container')}>
       <video
@@ -246,6 +263,14 @@ const VideoContainer = forwardRef(({ videoId }, ref) => {
         />
         Your browser does not support the video tag.
       </video>
+      <div className={cx('videoInfo')}>
+        <div className={cx('videoInfo-username')}>
+          {videoInfo?.userPost?.username}
+        </div>
+        <span className={cx('videoInfo-caption')}>
+          {videoInfo?.caption + toString(videoInfo?.hashtags)}
+        </span>
+      </div>
       <button
         className={cx('progress-container')}
         onClick={handleProgressClick}
