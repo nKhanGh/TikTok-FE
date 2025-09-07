@@ -22,6 +22,8 @@ const ProfileVideo = () => {
   const [videoIds, setVideoIds] = useState([]);
   const [cursor, setCursor] = useState(0);
   const [hasMore, setHasMore] = useState(true);
+  const [loadingVideos, setLoadingVideos] = useState({});
+
   const limit = 20;
 
   const axiosInstance = useAxios();
@@ -43,11 +45,17 @@ const ProfileVideo = () => {
       );
       const result = response.data.result;
       console.log(result);
-      setVideoIds((prev) => [...prev, ...result.videoIds]);
+      setVideoIds((prev) => {
+        const combined = [...prev, ...result.videoIds];
+        const unique = combined.filter(
+          (id, index) => combined.indexOf(id) === index,
+        );
+        return unique;
+      });
       setCursor(result.nextCursor);
       setHasMore(result.hasMore);
     } catch (error) {
-      console.log(error.data.message);
+      console.log(error);
     }
   };
 
@@ -78,6 +86,14 @@ const ProfileVideo = () => {
     });
   }, [activeIndex, hoverIndex]);
 
+  useEffect(() => {
+    setCursor(0);
+    setHasMore(true);
+    setVideoIds([]);
+    console.log(cursor, hasMore);
+    fetchVideo();
+  }, [location.pathname]);
+
   return (
     <div className={cx('wrapper')}>
       <div className={cx('video-header')}>
@@ -102,18 +118,31 @@ const ProfileVideo = () => {
       </div>
       <div className={cx('video-container')}>
         {videoIds.map((videoId) => (
-          <video
-            key={videoId}
-            className={cx('video-element')}
-            onMouseEnter={(e) => e.target.play()}
-            onMouseLeave={(e) => e.target.pause()}
-            tabIndex={0}
-            muted
-            loop
-          >
-            <source src={`/api/videos/public/${videoId}/get`} />
-            <track kind='captions' src={null} label='none' />
-          </video>
+          <>
+            <video
+              key={videoId}
+              className={cx('video-element')}
+              onMouseEnter={(e) => e.target.play()}
+              onMouseLeave={(e) => e.target.pause()}
+              tabIndex={0}
+              onLoadStart={() =>
+                setLoadingVideos((prev) => ({ ...prev, [videoId]: true }))
+              }
+              onCanPlay={() =>
+                setLoadingVideos((prev) => {
+                  const newState = { ...prev };
+                  delete newState[videoId];
+                  return newState;
+                })
+              }
+              muted
+              loop
+            >
+              <source src={`/api/videos/public/${videoId}/get`} />
+              <track kind='captions' src={null} label='none' />
+            </video>
+            {loadingVideos[videoId] && <div className={cx('overlay')} />}
+          </>
         ))}
       </div>
       <div ref={loadMoreRef} style={{ height: '1px' }}></div>

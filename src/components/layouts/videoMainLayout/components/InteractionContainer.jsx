@@ -27,6 +27,7 @@ const InteractionContainer = ({ videoInfo }) => {
   const [numShared] = useState(23);
 
   const username = localStorage.getItem('tiktokUsername');
+  const token = localStorage.getItem('tiktokToken');
 
   const axiosInstance = useAxios();
 
@@ -50,6 +51,7 @@ const InteractionContainer = ({ videoInfo }) => {
 
   useEffect(() => {
     setNumLiked(videoInfo?.likeCount);
+    if (token === null || token === '') return;
     setIsLiked(
       videoInfo?.userLiked?.some(
         (userLiked) => userLiked.username === username,
@@ -69,6 +71,7 @@ const InteractionContainer = ({ videoInfo }) => {
 
   useEffect(() => {
     const checkIsFollow = async () => {
+      if (token === null || token === '') return;
       try {
         const response = await axiosInstance.get(`/users/isFollow/${userId}`);
         const isFollowed = response.data.result;

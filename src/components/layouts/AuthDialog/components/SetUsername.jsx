@@ -35,6 +35,7 @@ const SetUsername = () => {
       setIsLogin(true);
       setShowLogin(false);
       localStorage.setItem('tiktokUsername', username);
+      window.location.reload();
     } catch (error) {
       console.log(error);
       alert(error.response?.data.message);

@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useLogin } from '../../../../contexts/LoginContext';
 import useAxios from '../../../../service/useAxios';
 import LoginSubmitButton from '../../../UI/LoginSubmitButton';
+import useAvatar from '../../../../hooks/useAvatar';
 
 const cx = classNames.bind(styles);
 
@@ -13,8 +14,9 @@ const LoginByEmail = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [setError] = useState('');
-  const [setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const { updateAvatar } = useAvatar();
 
   const axiosInstance = useAxios();
 
@@ -22,7 +24,6 @@ const LoginByEmail = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
     setLoading(true);
     try {
       const response = await axiosInstance.post(
@@ -45,13 +46,13 @@ const LoginByEmail = () => {
       const userResponse = await axiosInstance.get('users/myInfo', {
         skipAuth: false,
       });
-      console.log(userResponse.data.result);
-      localStorage.setItem('tiktokUsername', userResponse.data.result.username);
-      setUsername(userResponse.data.result.username);
-      localStorage.setItem(
-        'tiktokAvatarUrl',
-        userResponse.data.result.avatarUrl,
-      );
+      const result = userResponse.data.result;
+      console.log(result);
+      localStorage.setItem('tiktokUsername', result.username);
+      setUsername(result.username);
+      localStorage.setItem('tiktokAvatarUrl', result.avatarUrl);
+      updateAvatar(result.avatarUrl);
+      window.location.reload();
     } catch (error) {
       setError(error.response.data.message);
       alert(error.response.data.message);

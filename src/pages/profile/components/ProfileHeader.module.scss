@@ -40,17 +40,20 @@
 }
 
 .header-edit {
-  padding: 1px 16px;
+  padding: 1px 0px;
   color: #fff;
   background-color: #fe2c55;
   height: 40px;
+  width: 120px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
+  text-align: center;
 }
 
 .header-button {
   background-color: #ffffff21;
+  font-weight: 500;
   border: none;
   color: #fff;
   border-radius: 8px;
@@ -70,6 +73,9 @@
 
 .rectangle-button {
   padding: 1px 16px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 .header-interaction {
@@ -92,6 +98,11 @@
   border: none;
   background-color: transparent;
   color: #ffffffbf;
+}
+
+.hoverable:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .header-bio {

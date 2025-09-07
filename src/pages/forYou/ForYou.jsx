@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import MainSideBar from '../../components/layouts/mainSidebar/MainSidebar';
 import ViewMainLayout from '../../components/layouts/viewMainLayout/viewMainLayout';
 import { FindingProvider } from '../../contexts/FindingContext';
@@ -31,17 +31,12 @@ const ForYou = () => {
       console.log(error);
     }
   }, [videoIds.length]);
-  console.log(cursor);
 
   return (
     <div className={cx('wrapper')}>
       <FindingProvider>
         <MainSideBar />
       </FindingProvider>
-      {/* <CommentProvider>
-        <VideoWrapper  fetchVideo={fetchVideo} hasMore={hasMore} videoIds={videoIds}/>
-        <CommentContainer />
-      </CommentProvider> */}
       <ViewMainLayout
         fetchVideo={fetchVideo}
         videoIds={videoIds}

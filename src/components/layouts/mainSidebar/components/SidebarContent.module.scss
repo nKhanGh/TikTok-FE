@@ -16,6 +16,7 @@
   border-radius: 8px;
   padding-left: 4px;
   margin-left: 6px;
+  cursor: pointer;
 }
 
 .sidebar-content-element.sidebar-nav-active {
@@ -40,6 +41,12 @@
 
 .sidebar-follower {
   padding: 8px;
+}
+
+.non-followed-info {
+  color: #ffffffbf;
+  font-size: 13px;
+  padding-right: 8px;
 }
 
 .sidebar-follower-content {

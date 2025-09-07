@@ -13,10 +13,9 @@ const useAvatar = () => {
   }, []);
 
   const updateAvatar = (newUrl) => {
-    if (newUrl) {
-      localStorage.setItem('tiktokAvatarUrl', newUrl);
-      listeners.forEach((listener) => listener(newUrl));
-    }
+    localStorage.setItem('tiktokAvatarUrl', newUrl);
+    setAvatarUrl(newUrl);
+    listeners.forEach((listener) => listener(newUrl));
   };
 
   return { avatarUrl, updateAvatar };

@@ -59,7 +59,7 @@ const CommentContainer = ({ videoId }) => {
   const postComment = async (e, parentId) => {
     e.preventDefault();
     try {
-      await axiosInstance.post(
+      const response = await axiosInstance.post(
         `/comments/${videoId}`,
         {
           content: parentId ? reply : comment,
@@ -67,8 +67,23 @@ const CommentContainer = ({ videoId }) => {
         },
         { skipAuth: false },
       );
-      setComment('');
-      fetchComment();
+      const newComment = response.data.result;
+
+      if (parentId) {
+        setVisibleRepliesMap((prev) => ({
+          ...prev,
+          [parentId]: {
+            ...prev[parentId],
+            repliesList: [newComment, ...prev[parentId].repliesList],
+            renderedComment: prev[parentId].renderedComment + 1,
+            totalComment: prev[parentId].totalComment + 1,
+          },
+        }));
+        setReply('');
+      } else {
+        setComment('');
+        setComments((prev) => [newComment, ...prev]);
+      }
     } catch (error) {
       console.log(error);
     }

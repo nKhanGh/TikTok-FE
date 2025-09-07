@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronDown,
+  faChevronUp,
   faCirclePlus,
   faCompass,
   faEllipsis,
@@ -17,22 +18,24 @@ import {
 import { NavLink } from 'react-router-dom';
 import { useFinding } from '../../../../contexts/FindingContext';
 
-import avatar from './avatar.jpg';
 import { useLogin } from '../../../../contexts/LoginContext';
+import { useEffect, useRef, useState } from 'react';
+import useAxios from '../../../../service/useAxios';
 
 const cx = classNames.bind(styles);
 
-const userList = [
-  { name: 'Lionel Messi1', username: 'leomessi1' },
-  { name: 'Lionel Messi2', username: 'leomessi2' },
-  { name: 'Lionel Messi3', username: 'leomessi3' },
-  { name: 'Lionel Messi4', username: 'leomessi4' },
-  { name: 'Lionel Messi5', username: 'leomessi5' },
-];
+const PAGE_SIZE = 5;
 
 const SidebarContent = () => {
   const { isFinding } = useFinding();
   const { username } = useLogin();
+  const [followedUsers, setFollowedUsers] = useState([]);
+  const [page, setPage] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+
+  const didFetchRef = useRef(false);
+
+  const axiosInstance = useAxios();
   const navItems = [
     { path: '/', icon: faHouse, content: 'For You' },
     { path: '/explore', icon: faCompass, content: 'Explore' },
@@ -49,6 +52,32 @@ const SidebarContent = () => {
     },
     { path: '/more', icon: faEllipsis, content: 'More' },
   ];
+
+  const fetchFollowedUser = async (paramPage = page) => {
+    try {
+      const response = await axiosInstance.get(
+        `/users/public/followed?page=${paramPage}&size=${PAGE_SIZE}`,
+        { skipAuth: false },
+      );
+      const result = response.data.result;
+      console.log(result);
+      setFollowedUsers((prev) =>
+        paramPage === 0
+          ? result.followedUsers
+          : [...prev, ...result.followedUsers],
+      );
+      setPage(result.nextPage);
+      setHasMore(result.hasMore);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (didFetchRef.current) return;
+    didFetchRef.current = true;
+    fetchFollowedUser();
+  }, [username]);
   return (
     <>
       <div
@@ -80,31 +109,51 @@ const SidebarContent = () => {
           <div className={cx('sidebar-follower-content')}>
             Following accounts
           </div>
-          {userList.map((user) => (
-            <div
-              key={user.username}
-              className={cx('sidebar-content-element')}
-              style={{ marginBottom: '12px' }}
-            >
-              <img
-                src={avatar}
-                alt='Khang'
-                className={cx('following-avatar')}
-              />
-              <div className={cx('following-content')}>
-                <div className={cx('following-name')}>{user.name}</div>
-                <div className={cx('following-username')}>{user.username}</div>
-              </div>
+          {followedUsers.length === 0 ? (
+            <div className={cx('non-followed-info')}>
+              The accounts you follow will appear hear.
             </div>
-          ))}
-          <button className={cx('sidebar-content-element')}>
-            <FontAwesomeIcon
-              icon={faChevronDown}
-              className={cx('sidebar-content-icon')}
-              style={{ height: '14px' }}
-            />
-            <span className={cx('sidebar-nav-content')}>See more</span>
-          </button>
+          ) : (
+            followedUsers.map((user) => (
+              <NavLink
+                to={`/@${user.username}`}
+                key={user.username}
+                className={cx('sidebar-content-element')}
+                style={{ marginBottom: '12px' }}
+              >
+                <img
+                  src={user.avatarUrl ?? '/api/images/default_avatar.jpg'}
+                  alt='Khang'
+                  className={cx('following-avatar')}
+                />
+                <div className={cx('following-content')}>
+                  <div className={cx('following-name')}>{user.name}</div>
+                  <div className={cx('following-username')}>
+                    {user.username}
+                  </div>
+                </div>
+              </NavLink>
+            ))
+          )}
+          {followedUsers.length !== 0 && (
+            <button
+              className={cx('sidebar-content-element')}
+              onClick={
+                hasMore
+                  ? () => fetchFollowedUser(page)
+                  : () => fetchFollowedUser(0)
+              }
+            >
+              <FontAwesomeIcon
+                icon={hasMore ? faChevronDown : faChevronUp}
+                className={cx('sidebar-content-icon')}
+                style={{ height: '14px' }}
+              />
+              <span className={cx('sidebar-nav-content')}>
+                {hasMore ? 'See more' : 'Hide'}
+              </span>
+            </button>
+          )}
         </div>
       )}
     </>

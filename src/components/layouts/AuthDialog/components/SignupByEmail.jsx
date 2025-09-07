@@ -8,6 +8,7 @@ import { cTypes } from './DialogComponentType';
 import PropTypes from 'prop-types';
 import BirthdayContainer from './SignupByEmail/BirthdayContainer';
 import { useLogin } from '../../../../contexts/LoginContext';
+import useAvatar from '../../../../hooks/useAvatar';
 
 const cx = classNames.bind(styles);
 
@@ -27,8 +28,10 @@ const SignupByEmail = ({ setCType, toEmail, setToEmail }) => {
   const [validCode, setValidCode] = useState(true);
   const [sendCode, setSendCode] = useState(false);
 
-  const [setError] = useState('');
-  const [setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const { updateAvatar } = useAvatar();
 
   const { setUsername } = useLogin();
 
@@ -113,6 +116,7 @@ const SignupByEmail = ({ setCType, toEmail, setToEmail }) => {
       );
       setUsername(infoResponse.data.result.username);
       localStorage.setItem('tiktokUsername', infoResponse.data.result.username);
+      updateAvatar(infoResponse?.data?.result?.avatarUrl);
       setCType(cTypes.username);
     } catch (error) {
       alert(error.response?.data?.message);
