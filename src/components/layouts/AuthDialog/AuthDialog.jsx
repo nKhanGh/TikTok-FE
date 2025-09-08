@@ -40,7 +40,10 @@ const AuthDialog = () => {
       name: 'google',
       content: 'Continue with Google',
       icon: faGoogle,
-      func: () => {},
+      func: () => {
+        window.location.href =
+          'http://localhost:8080/api/oauth2/authorization/google';
+      },
     },
   ];
 
@@ -61,7 +64,10 @@ const AuthDialog = () => {
       name: 'google',
       content: 'Continue with Google',
       icon: faGoogle,
-      func: () => {},
+      func: () => {
+        window.location.href =
+          'http://localhost:8080/api/oauth2/authorization/google';
+      },
     },
   ];
 

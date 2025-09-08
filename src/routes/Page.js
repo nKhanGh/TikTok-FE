@@ -41,4 +41,9 @@ export const pages = [
     component: lazy(() => import('../pages/upload/Upload')),
     isPrivate: true,
   },
+  {
+    path: '/auth/callback',
+    component: lazy(() => import('../pages/authCallBack/AuthCallBack')),
+    isPrivate: false,
+  },
 ];

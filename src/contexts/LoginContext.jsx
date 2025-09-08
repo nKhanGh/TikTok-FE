@@ -13,6 +13,13 @@ export const LoginProVider = ({ children }) => {
     localStorage.getItem('tiktokUsername'),
   );
 
+  const login = (username) => {
+    setIsLogin(true);
+    setShowLogin(false);
+    setUsername(username);
+    localStorage.setItem('tiktokUsername', username);
+  };
+
   const logout = () => {
     setIsLogin(false);
     setShowLogin(true);
@@ -27,6 +34,7 @@ export const LoginProVider = ({ children }) => {
       showLogin,
       setShowLogin,
       logout,
+      login,
       username,
       setUsername,
     }),
